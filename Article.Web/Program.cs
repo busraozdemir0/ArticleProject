@@ -1,8 +1,11 @@
 using Article.Data.Context;
+using Article.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.LoadDataLayerExtension(builder.Configuration);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
