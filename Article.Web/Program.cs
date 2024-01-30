@@ -1,5 +1,6 @@
 using Article.Data.Context;
 using Article.Data.Extensions;
+using Article.Service.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ** Kendi yazdigimiz servisleri barindiran uzanti sinifi
 builder.Services.LoadDataLayerExtension(builder.Configuration);
+builder.Services.LoadServiceLayerExtension();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
