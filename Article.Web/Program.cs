@@ -3,14 +3,16 @@ using Article.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
+// * Proje ayaga kalkarken buradaki Servislere bakarak calistirir.
+
 var builder = WebApplication.CreateBuilder(args);
 
+// ** Kendi yazdigimiz servisleri barindiran uzanti sinifi
 builder.Services.LoadDataLayerExtension(builder.Configuration);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<AppDbContext>(opt=>opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
