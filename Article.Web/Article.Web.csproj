@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -16,6 +17,16 @@
   <ItemGroup>
     <ProjectReference Include="..\Article.Data\Article.Data.csproj" />
     <ProjectReference Include="..\Article.Service\Article.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\admin\.github\workflows\handle-new-issue-comment.yml" />
+    <None Include="wwwroot\admin\.github\workflows\handle-new-issue.yml" />
+    <None Include="wwwroot\admin\.github\workflows\issue-staler.yml" />
   </ItemGroup>
 
 </Project>
