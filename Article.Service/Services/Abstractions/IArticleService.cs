@@ -1,4 +1,5 @@
-﻿using Article.Entity.Entities;
+﻿using Article.Entity.DTOs.Articles;
+using Article.Entity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Article.Service.Services.Abstractions
 {
     public interface IArticleService
     {
-        Task<List<Articlee>> GetAllArticleAsync();  // Asenkron bir islem yaptigimiz icin Task eklemeyi unutmamaliyiz
+        Task<List<ArticleDto>> GetAllArticleAsync();  // Asenkron bir islem yaptigimiz icin Task eklemeyi unutmamaliyiz
 
     }
 }

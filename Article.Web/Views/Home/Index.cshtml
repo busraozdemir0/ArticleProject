@@ -1,4 +1,4 @@
-﻿@model List<Articlee>
+﻿@model List<ArticleDto>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -15,5 +15,6 @@
 {
     <h1>@article.Title</h1> <br />
     <h3>@article.Content</h3> 
+    <h3>@article.CreatedBy</h3> 
     <br /><br />
 }
