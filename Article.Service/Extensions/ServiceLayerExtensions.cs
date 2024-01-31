@@ -23,6 +23,7 @@ namespace Article.Service.Extensions
 
 
             services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
             services.AddAutoMapper(assembly);
 
