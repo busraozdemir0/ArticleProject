@@ -1,6 +1,8 @@
 using Article.Data.Context;
 using Article.Data.Extensions;
+using Article.Entity.Entities;
 using Article.Service.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -14,6 +16,18 @@ builder.Services.LoadServiceLayerExtension();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(); // .AddRazorRuntimeCompilation() ile proje calisirken yapilan degisikliklerin sayfa yenilendigi gibi yansimasi icin
+
+//* Identity Yapýlandirmasi
+builder.Services.AddIdentity<AppUser, AppRole>(opt =>
+{
+    // Sifre olusturulurken buyuk kucuk harf zorunlulugu vb gibi zorunluluklarý urada yonetebiliriz
+    opt.Password.RequireNonAlphanumeric = false;
+    opt.Password.RequireLowercase = false;
+    opt.Password.RequireUppercase = false;
+})
+    .AddRoleManager<RoleManager<AppRole>>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
 
 var app = builder.Build();
@@ -31,6 +45,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
