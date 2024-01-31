@@ -48,5 +48,28 @@ namespace Article.Service.Services.Concrete
             return map;
 
         }
+
+        public async Task<ArticleDto> GetArticleWithCategoryNonDeletedAsync(Guid articleId) 
+        {
+            // Kategorileri makalelere include ettik
+            var article = await unitOfWork.GetRepository<Articlee>().GetAsync(x => !x.IsDeleted && x.Id==articleId, x => x.Category); // (x.IsDeleted==False) IsDeleted'leri false olanlari getir 
+
+            var map = mapper.Map<ArticleDto>(article);
+
+            return map;
+
+        }
+
+        public async Task UpdateArticleAsync(ArticleUpdateDto articleUpdateDto)
+        {
+            var article = await unitOfWork.GetRepository<Articlee>().GetAsync(x => !x.IsDeleted && x.Id == articleUpdateDto.Id, x => x.Category);
+           
+            article.Title= articleUpdateDto.Title;
+            article.Content= articleUpdateDto.Content;
+            article.CategoryId= articleUpdateDto.CategoryId;
+
+            await unitOfWork.GetRepository<Articlee>().UpdateAsync(article);
+            await unitOfWork.SaveAsync();
+        }
     }
 }

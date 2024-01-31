@@ -14,6 +14,8 @@ namespace Article.Service.AutoMapper.Articles
         public ArticleProfile()
         {
             CreateMap<ArticleDto, Articlee>().ReverseMap(); // *** Dto istersem Articlee ile maple'me islemi yap, eger Articlee istersem dto'yu map'le.
+            CreateMap<ArticleUpdateDto, Articlee>().ReverseMap(); // *** Dto istersem Articlee ile maple'me islemi yap, eger Articlee istersem dto'yu map'le.
+            CreateMap<ArticleUpdateDto, ArticleDto>().ReverseMap(); // *** Dto istersem Articlee ile maple'me islemi yap, eger Articlee istersem dto'yu map'le.
         }
     }
 }
