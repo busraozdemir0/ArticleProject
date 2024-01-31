@@ -10,7 +10,9 @@ namespace Article.Service.Services.Abstractions
 {
     public interface IArticleService
     {
-        Task<List<ArticleDto>> GetAllArticleAsync();  // Asenkron bir islem yaptigimiz icin Task eklemeyi unutmamaliyiz
+        // Asenkron(islemlerin ayni anda calismamasi) bir islem yaptigimiz icin Task eklemeyi unutmamaliyiz
+        Task<List<ArticleDto>> GetAllArticlesWithCategoryNonDeletedAsync();  // tum makaleleleri kategorleriyle birlikte silinmemis olanlari getir  
+        
 
     }
 }

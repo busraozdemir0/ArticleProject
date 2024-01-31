@@ -28,6 +28,8 @@
       rel="stylesheet"
     />
 
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="~/admin/assets/vendor/fonts/boxicons.css" />
 
@@ -339,14 +341,14 @@
     </div>
     <!-- / Layout wrapper -->
 
-    <div class="buy-now">
+@*     <div class="buy-now">
       <a
         href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/"
         target="_blank"
         class="btn btn-danger btn-buy-now"
         >Upgrade to Pro</a
       >
-    </div>
+    </div> *@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -354,6 +356,11 @@
     <script src="~/admin/assets/vendor/libs/popper/popper.js"></script>
     <script src="~/admin/assets/vendor/js/bootstrap.js"></script>
     <script src="~/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.6.3/js/dataTables.buttons.min.js" crossorigin="anonymous"></script>
 
     <script src="~/admin/assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
@@ -366,6 +373,8 @@
 
     <!-- Page JS -->
     <script src="~/admin/assets/js/dashboards-analytics.js"></script>
+    
+    @await RenderSectionAsync("Scripts",false)
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

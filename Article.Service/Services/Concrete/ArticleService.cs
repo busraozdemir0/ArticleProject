@@ -21,10 +21,11 @@ namespace Article.Service.Services.Concrete
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
-        public async Task<List<ArticleDto>> GetAllArticleAsync()
+        public async Task<List<ArticleDto>> GetAllArticlesWithCategoryNonDeletedAsync()  // Tum makaleleleri kategorleriyle birlikte silinmemis olanlari getir
         {
-            var articles=await unitOfWork.GetRepository<Articlee>().GetAllAsync();
-           
+            // Kategorileri makalelere include ettik
+            var articles=await unitOfWork.GetRepository<Articlee>().GetAllAsync(x=>!x.IsDeleted, x=>x.Category); // (x.IsDeleted==False) IsDeleted'leri false olanlari getir 
+
             var map = mapper.Map<List<ArticleDto>>(articles);
 
             return map;
