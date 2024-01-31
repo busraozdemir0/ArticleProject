@@ -1,5 +1,6 @@
 ﻿using Article.Data.Mappings;
 using Article.Entity.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Article.Data.Context
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser,AppRole,Guid,AppUserClaim,AppUserRole,AppUserLogin,AppRoleClaim,AppUserToken>  // Identity'de gecerli olmasini istedigimiz nesneleri buraya gectik
     {
         protected AppDbContext()
         {
@@ -25,7 +26,8 @@ namespace Article.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Model olusturulmadan once yapabilecegimiz configurasyonlar burada yapılır
-            
+
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         }
