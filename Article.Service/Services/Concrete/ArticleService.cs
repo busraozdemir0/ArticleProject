@@ -71,5 +71,16 @@ namespace Article.Service.Services.Concrete
             await unitOfWork.GetRepository<Articlee>().UpdateAsync(article);
             await unitOfWork.SaveAsync();
         }
+
+        public async Task SafeDeleteArticleAsync(Guid articleId)
+        {
+            var article = await unitOfWork.GetRepository<Articlee>().GetByGuidAsync(articleId);
+
+            article.IsDeleted = true; // makaleyi silmek yerine IsDeleted (silindi mi) alanini true olarak guncelliyoruz. (silinmediyse false degerine sahip)
+            article.DeletedDate = DateTime.Now;
+
+            await unitOfWork.GetRepository<Articlee>().UpdateAsync(article);
+            await unitOfWork.SaveAsync();
+        }
     }
 }
