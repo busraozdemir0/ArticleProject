@@ -62,7 +62,8 @@ namespace Article.Data.Mappings
                 LastName = "Özdemir",
                 PhoneNumberConfirmed = true,
                 EmailConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString()
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ImageId= Guid.Parse("25A68467-8A27-45B7-9202-50241CEA50FC")
             };
             superAdmin.PasswordHash = CreatePasswordHash(superAdmin, "123456");  // Olusturulan user icin 123456 sifresinin hash tabanli tutulmasi icin
 
@@ -79,7 +80,9 @@ namespace Article.Data.Mappings
                 LastName = "Admin",
                 PhoneNumberConfirmed = false,
                 EmailConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString()
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ImageId = Guid.Parse("509D3D55-646B-413B-8F3E-01C5DA780F76")
+
             };
             admin.PasswordHash = CreatePasswordHash(admin, "123456");
 

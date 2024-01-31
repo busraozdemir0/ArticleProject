@@ -13,5 +13,6 @@ namespace Article.Entity.Entities
         public string FileType { get; set; }
         public ICollection<Articlee> Articles { get; set; }
 
+        public ICollection<AppUser> Users { get; set; }
     }
 }

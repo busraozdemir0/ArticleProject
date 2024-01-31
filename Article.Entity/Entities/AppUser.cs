@@ -11,5 +11,8 @@ namespace Article.Entity.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public Guid ImageId { get; set; }   
+        public Image Image { get; set; }
+        public ICollection<Articlee> Articles { get; set; }  // bir User birden fazla makale yazabilir
     }
 }

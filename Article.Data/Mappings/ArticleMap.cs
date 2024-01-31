@@ -22,7 +22,8 @@ namespace Article.Data.Mappings
                 ImageId = Guid.Parse("25A68467-8A27-45B7-9202-50241CEA50FC"),
                 CreatedBy = "Admin Test",
                 CreatedDate = DateTime.Now,
-                IsDeleted = false
+                IsDeleted = false,
+                UserId= Guid.Parse("324BDFDE-4DDB-4333-9ED1-1E9E91226A73")
             },
 
             new Articlee
@@ -35,7 +36,8 @@ namespace Article.Data.Mappings
                 ImageId = Guid.Parse("509D3D55-646B-413B-8F3E-01C5DA780F76"),
                 CreatedBy = "Admin Test",
                 CreatedDate = DateTime.Now,
-                IsDeleted = false
+                IsDeleted = false,
+                UserId= Guid.Parse("2EF7516C-3A35-4B40-A744-C3C7DA3F6E20")
             }
             );
         }
