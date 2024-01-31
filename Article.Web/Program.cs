@@ -14,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.LoadDataLayerExtension(builder.Configuration);
 builder.Services.LoadServiceLayerExtension();
 
+builder.Services.AddSession();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(); // .AddRazorRuntimeCompilation() ile proje calisirken yapilan degisikliklerin sayfa yenilendigi gibi yansimasi icin
 
@@ -29,6 +31,20 @@ builder.Services.AddIdentity<AppUser, AppRole>(opt =>
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(config=>{
+    config.LoginPath = new PathString("/Admin/Auth/Login");  // kisi belli sayfalar icin oturum acmamissa otomatikman bu dizine yonlendirilecektir
+    config.LogoutPath = new PathString("/Admin/Auth/Logout");
+    config.Cookie = new CookieBuilder
+    {
+        Name = "ArticleProject",
+        HttpOnly = true,
+        SameSite = SameSiteMode.Strict,
+        SecurePolicy = CookieSecurePolicy.SameAsRequest // hem http hem de https tarafindan istek alabilecegimiz anlamina gelir - sadece https'den alabilmek icin always secenegi secilmelidir.
+    };
+    config.SlidingExpiration = true;
+    config.ExpireTimeSpan = TimeSpan.FromDays(1);  // oturumun 1 gun boyunca acik kalacagi anlamina geliyor- cookie 1 gun boyunca tutulacaktir
+    config.AccessDeniedPath = new PathString("/Admin/Auth/AccessDenied");
+});
 
 var app = builder.Build();
 
@@ -43,6 +59,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthentication();
