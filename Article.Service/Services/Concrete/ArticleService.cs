@@ -55,7 +55,7 @@ namespace Article.Service.Services.Concrete
 
         }
 
-        public async Task UpdateArticleAsync(ArticleUpdateDto articleUpdateDto)
+        public async Task<string> UpdateArticleAsync(ArticleUpdateDto articleUpdateDto)
         {
             var article = await unitOfWork.GetRepository<Articlee>().GetAsync(x => !x.IsDeleted && x.Id == articleUpdateDto.Id, x => x.Category);
            
@@ -65,9 +65,11 @@ namespace Article.Service.Services.Concrete
 
             await unitOfWork.GetRepository<Articlee>().UpdateAsync(article);
             await unitOfWork.SaveAsync();
+
+            return article.Title;
         }
 
-        public async Task SafeDeleteArticleAsync(Guid articleId)
+        public async Task<string> SafeDeleteArticleAsync(Guid articleId)
         {
             var article = await unitOfWork.GetRepository<Articlee>().GetByGuidAsync(articleId);
 
@@ -76,6 +78,8 @@ namespace Article.Service.Services.Concrete
 
             await unitOfWork.GetRepository<Articlee>().UpdateAsync(article);
             await unitOfWork.SaveAsync();
+
+            return article.Title;
         }
     }
 }

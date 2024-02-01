@@ -4,6 +4,7 @@ using Article.Entity.Entities;
 using Article.Service.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using System.Reflection;
 
 // * Proje ayaga kalkarken buradaki Servislere bakarak calistirir.
@@ -17,7 +18,13 @@ builder.Services.LoadServiceLayerExtension();
 builder.Services.AddSession();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(); // .AddRazorRuntimeCompilation() ile proje calisirken yapilan degisikliklerin sayfa yenilendigi gibi yansimasi icin
+builder.Services.AddControllersWithViews()
+    .AddNToastNotifyToastr(new ToastrOptions()
+    {
+        PositionClass=ToastPositions.TopRight,  // bildirimin sag ustte cikmasini sagladik
+        TimeOut=3000   // bildirim kac ms gosterilsin (3 sn olarak belirttik)
+    })
+    .AddRazorRuntimeCompilation(); // .AddRazorRuntimeCompilation() ile proje calisirken yapilan degisikliklerin sayfa yenilendigi gibi yansimasi icin
 
 //* Identity Yapýlandirmasi
 builder.Services.AddIdentity<AppUser, AppRole>(opt =>
@@ -55,7 +62,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseNToastNotify();  // ornegin makale eklendiginde bicimli bir sekilde bildirim mesaji verebilmek icin NToastNotify adli kutuphaneyi kullaniyoruz.
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

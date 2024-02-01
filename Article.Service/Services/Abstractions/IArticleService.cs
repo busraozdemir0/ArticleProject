@@ -14,7 +14,7 @@ namespace Article.Service.Services.Abstractions
         Task<List<ArticleDto>> GetAllArticlesWithCategoryNonDeletedAsync();  // tum makaleleleri kategorleriyle birlikte silinmemis olanlari getir  
         Task<ArticleDto> GetArticleWithCategoryNonDeletedAsync(Guid articleId);
         Task CreateArticleAsync(ArticleAddDto articleAddDto);
-        Task UpdateArticleAsync(ArticleUpdateDto articleUpdateDto);
-        Task SafeDeleteArticleAsync(Guid articleId);
+        Task<string> UpdateArticleAsync(ArticleUpdateDto articleUpdateDto);  // guncellenen makalenin basligini cekebilmek icin string tipinde donus gerceklestirdik
+        Task<string> SafeDeleteArticleAsync(Guid articleId);
     }
 }

@@ -2,9 +2,11 @@
 using Article.Entity.Entities;
 using Article.Service.Extensions;
 using Article.Service.Services.Abstractions;
+using Article.Web.ResultMessages;
 using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 
 namespace Article.Web.Areas.Admin.Controllers
 {
@@ -15,13 +17,16 @@ namespace Article.Web.Areas.Admin.Controllers
         private readonly ICategoryService categoryService;
         private readonly IMapper mapper;
         private readonly IValidator<Articlee> validator;
+        private readonly IToastNotification toast; // ornegin makale eklendiginde bicimli bir sekilde bildirim mesaji verebilmek icin NToastNotify adli kutuphaneyi kullaniyoruz.
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService, IMapper mapper, IValidator<Articlee> validator)
+
+        public ArticleController(IArticleService articleService, ICategoryService categoryService, IMapper mapper, IValidator<Articlee> validator,IToastNotification toast)
         {
             this.articleService = articleService;
             this.categoryService = categoryService;
             this.mapper = mapper;
             this.validator = validator;
+            this.toast = toast;
         }
         public async Task<IActionResult> Index()
         {
@@ -46,6 +51,8 @@ namespace Article.Web.Areas.Admin.Controllers
             if (result.IsValid)
             {
                 await articleService.CreateArticleAsync(articleAddDto);
+                toast.AddSuccessToastMessage(Messages.Article.Add(articleAddDto.Title), new ToastrOptions { Title="Başarılı!"});  // ResultMessages folder altinda Messages sinifinda ekleme ve guncelleme islemleri icin makale adina gore static mesajlar yazildi
+
                 return RedirectToAction("Index", "Home", new { Area = "Admin" });
             }
             else
@@ -77,8 +84,9 @@ namespace Article.Web.Areas.Admin.Controllers
 
             if (result.IsValid)
             {
-                await articleService.UpdateArticleAsync(articleUpdateDto);
-
+                var title = await articleService.UpdateArticleAsync(articleUpdateDto); // guncellenen makalenin basligini cekiyoruz
+                toast.AddSuccessToastMessage(Messages.Article.Update(title), new ToastrOptions() { Title = "Başarılı!" });
+                return RedirectToAction("Index", "Article", new { Area = "Admin" });
             }
             else
             {
@@ -93,7 +101,8 @@ namespace Article.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(Guid articleId)
         {
-            await articleService.SafeDeleteArticleAsync(articleId);
+            var title = await articleService.SafeDeleteArticleAsync(articleId);
+            toast.AddSuccessToastMessage(Messages.Article.Delete(title), new ToastrOptions() { Title = "Başarılı!" });
 
             return RedirectToAction("Index", "Article", new { Area = "Admin" });
         }
