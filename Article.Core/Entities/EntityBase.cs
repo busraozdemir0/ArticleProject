@@ -15,6 +15,7 @@ namespace Article.Core.Entities
         //}
 
         // Bu kodlar ortak oldugu icin yani birden fazla tabloda icerecegi icin Core katmanında EntityBase classi olusturup burada tanimladik
+
         public virtual Guid Id { get; set; } = Guid.NewGuid();
         public virtual string CreatedBy { get; set; } = "Undefined";
         public virtual string? ModifiedBy { get; set; }  // ? => kimse duzenlemezse nullable yani bos gecilebilir oldugunu belirtiyoruz
