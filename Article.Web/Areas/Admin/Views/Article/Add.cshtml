@@ -8,6 +8,7 @@
             <div class="card mb-4">
                 <h5 class="card-header"></h5>
                 <form asp-controller="Article" asp-action="Add" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly"></div>
                     <div class="card-body">
                         <div class="form-group">
 
@@ -26,6 +27,8 @@
                                    placeholder="Lütfen başlık giriniz."
                                    aria-describedby="defaultFormControlHelp" />
                         </div>
+                        <span asp-validation-for="Title" class="text-danger"></span>
+
                         <div class="form-group">
                             <label asp-for="Content" class="form-label">İçerik</label>
                             <textarea asp-for="Content" type="text"
@@ -34,6 +37,8 @@
                                    placeholder="Makale içeriği..."
                                    aria-describedby="defaultFormControlHelp" style="min-height:300px"></textarea>
                         </div>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+
                        
 
                         <div class="form-group">
