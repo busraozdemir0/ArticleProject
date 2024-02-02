@@ -7,6 +7,7 @@ using Article.Service.Services.Abstractions;
 using Article.Service.Services.Concrete;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -28,6 +29,8 @@ namespace Article.Service.Extensions
 
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();  // mevcutta olan kullaniciyi(login olmus kullaniciyi) bulmamizi saglayacak olan kisim
 
             services.AddAutoMapper(assembly);
 

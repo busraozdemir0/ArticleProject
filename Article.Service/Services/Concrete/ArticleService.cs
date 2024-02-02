@@ -1,11 +1,14 @@
 ﻿using Article.Data.UnifOfWorks;
 using Article.Entity.DTOs.Articles;
 using Article.Entity.Entities;
+using Article.Service.Extensions;
 using Article.Service.Services.Abstractions;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,19 +18,27 @@ namespace Article.Service.Services.Concrete
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly ClaimsPrincipal _user;
 
-        public ArticleService(IUnitOfWork unitOfWork, IMapper mapper)
+        public ArticleService(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.httpContextAccessor = httpContextAccessor;
+            _user = httpContextAccessor.HttpContext.User;
         }
 
         public async Task CreateArticleAsync(ArticleAddDto articleAddDto)
         {
-            var userId = Guid.Parse("324BDFDE-4DDB-4333-9ED1-1E9E91226A73");
+            // var userId = Guid.Parse("324BDFDE-4DDB-4333-9ED1-1E9E91226A73");
+
+            var userId = _user.GetLoggedInUserId();  // login olan kullanicinin id'si
+            var userEmail = _user.GetLoggedInUserEmail();
+
             var imageId = Guid.Parse("25A68467-8A27-45B7-9202-50241CEA50FC");
 
-            var article = new Articlee(articleAddDto.Title, articleAddDto.Content, userId,articleAddDto.CategoryId, imageId);
+            var article = new Articlee(articleAddDto.Title, articleAddDto.Content, userId,userEmail,articleAddDto.CategoryId, imageId);
 
             await unitOfWork.GetRepository<Articlee>().AddAsync(article);
             await unitOfWork.SaveAsync();
@@ -58,10 +69,13 @@ namespace Article.Service.Services.Concrete
         public async Task<string> UpdateArticleAsync(ArticleUpdateDto articleUpdateDto)
         {
             var article = await unitOfWork.GetRepository<Articlee>().GetAsync(x => !x.IsDeleted && x.Id == articleUpdateDto.Id, x => x.Category);
-           
+            var userEmail = _user.GetLoggedInUserEmail();
+
             article.Title= articleUpdateDto.Title;
             article.Content= articleUpdateDto.Content;
             article.CategoryId= articleUpdateDto.CategoryId;
+            article.ModifiedDate = DateTime.Now;
+            article.ModifiedBy = userEmail;
 
             await unitOfWork.GetRepository<Articlee>().UpdateAsync(article);
             await unitOfWork.SaveAsync();
@@ -72,9 +86,11 @@ namespace Article.Service.Services.Concrete
         public async Task<string> SafeDeleteArticleAsync(Guid articleId)
         {
             var article = await unitOfWork.GetRepository<Articlee>().GetByGuidAsync(articleId);
+            var userEmail = _user.GetLoggedInUserEmail();
 
             article.IsDeleted = true; // makaleyi silmek yerine IsDeleted (silindi mi) alanini true olarak guncelliyoruz. (silinmediyse false degerine sahip)
             article.DeletedDate = DateTime.Now;
+            article.DeletedBy = userEmail; 
 
             await unitOfWork.GetRepository<Articlee>().UpdateAsync(article);
             await unitOfWork.SaveAsync();
