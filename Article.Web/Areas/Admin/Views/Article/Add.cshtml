@@ -12,16 +12,21 @@
                     <div class="card-body">
                         <div class="form-group">
 
-                           @*  kategori listesini dropdown icerisinde listeliyoruz *@
                             <label asp-for="CategoryId" class="form-label">Kategori</label>
 
+                            <a class="btn text-primary float-end" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                @* data- ile baslayan kisimlara bs eklersek bootstrapten gelecegini anlar ve projedeki digerleriyle cakismaz *@
+                                Ekle <i class="bx bx-plus"></i>
+                            </a>
+
+                            @*  kategori listesini dropdown icerisinde listeliyoruz *@
                             <select id="categoryList" class="form-control mb-3" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"Id","Name"))"></select>
                             <span asp-validation-for="CategoryId" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
                             <label asp-for="Title" class="form-label">Başlık</label>
-                            <input asp-for="Title"  type="text"
+                            <input asp-for="Title" type="text"
                                    class="form-control mb-3"
                                    id="defaultFormControlInput"
                                    placeholder="Lütfen başlık giriniz."
@@ -32,26 +37,26 @@
                         <div class="form-group">
                             <label asp-for="Content" class="form-label">İçerik</label>
                             <textarea asp-for="Content" type="text"
-                                   class="form-control mb-3"
-                                   id="defaultFormControlInput"
-                                   placeholder="Makale içeriği..."
-                                   aria-describedby="defaultFormControlHelp" style="min-height:300px"></textarea>
+                                      class="form-control mb-3"
+                                      id="defaultFormControlInput"
+                                      placeholder="Makale içeriği..."
+                                      aria-describedby="defaultFormControlHelp" style="min-height:300px"></textarea>
                             <span asp-validation-for="Content" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
                             <label asp-for="Photo" class="form-label">Resim seçiniz</label>
-                            <input asp-for="Photo" type="file" accept="image/*"  
-                                      class="form-control mb-3"
-                                      id="defaultFormControlInput"
-                                      aria-describedby="defaultFormControlHelp"/>
+                            <input asp-for="Photo" type="file" accept="image/*"
+                                   class="form-control mb-3"
+                                   id="defaultFormControlInput"
+                                   aria-describedby="defaultFormControlHelp" />
                             <span asp-validation-for="Photo" class="text-danger"></span>  @* accept="image/*" => sadece image tipindeki dosyalari kabul etmesi icin *@
                         </div>
 
-                       
+
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block" >Kaydet</button>
+                            <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
                         </div>
                     </div>
                 </form>
@@ -60,3 +65,42 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Kategori Ekleme</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="d-block form-label">Kategori İsmi</label>
+                        <input class="form-control" type="text" id="categoryName" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" data-keyboard="false" class="btn btn-primary" id="btnSave">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/categoryAdd.js"></script>  @* bootstrap modal ile kategori ekleme işlemi *@
+
+    <script>
+        var app = app || [];
+        app.Urls = app.Urls || [];
+
+        app.Urls.baseUrl = '@Url.Content("~")';
+        app.Urls.categoryAddUrl = "@(Url.Action("AddWithAjax", "Category"))";
+        app.Urls.articleAddUrl = "@(Url.Action("Add", "Article"))";
+    </script>
+}
