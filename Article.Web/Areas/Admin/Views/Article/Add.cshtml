@@ -26,8 +26,8 @@
                                    id="defaultFormControlInput"
                                    placeholder="Lütfen başlık giriniz."
                                    aria-describedby="defaultFormControlHelp" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
-                        <span asp-validation-for="Title" class="text-danger"></span>
 
                         <div class="form-group">
                             <label asp-for="Content" class="form-label">İçerik</label>
@@ -36,8 +36,17 @@
                                    id="defaultFormControlInput"
                                    placeholder="Makale içeriği..."
                                    aria-describedby="defaultFormControlHelp" style="min-height:300px"></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
                         </div>
-                        <span asp-validation-for="Content" class="text-danger"></span>
+
+                        <div class="form-group">
+                            <label asp-for="Photo" class="form-label">Resim seçiniz</label>
+                            <input asp-for="Photo" type="file" accept="image/*"  
+                                      class="form-control mb-3"
+                                      id="defaultFormControlInput"
+                                      aria-describedby="defaultFormControlHelp"/>
+                            <span asp-validation-for="Photo" class="text-danger"></span>  @* accept="image/*" => sadece image tipindeki dosyalari kabul etmesi icin *@
+                        </div>
 
                        
 

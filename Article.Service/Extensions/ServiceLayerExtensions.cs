@@ -3,6 +3,7 @@ using Article.Data.Repositories.Abstractions;
 using Article.Data.Repositories.Concretes;
 using Article.Data.UnifOfWorks;
 using Article.Service.FluentValidations;
+using Article.Service.Helpers.Images;
 using Article.Service.Services.Abstractions;
 using Article.Service.Services.Concrete;
 using FluentValidation;
@@ -29,6 +30,7 @@ namespace Article.Service.Extensions
 
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IImageHelper, ImageHelper>();
             
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();  // mevcutta olan kullaniciyi(login olmus kullaniciyi) bulmamizi saglayacak olan kisim
 

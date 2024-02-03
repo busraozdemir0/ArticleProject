@@ -1,7 +1,9 @@
 ﻿using Article.Data.UnifOfWorks;
 using Article.Entity.DTOs.Articles;
 using Article.Entity.Entities;
+using Article.Entity.Enums;
 using Article.Service.Extensions;
+using Article.Service.Helpers.Images;
 using Article.Service.Services.Abstractions;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -19,13 +21,15 @@ namespace Article.Service.Services.Concrete
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IImageHelper imageHelper;
         private readonly ClaimsPrincipal _user;
 
-        public ArticleService(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public ArticleService(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor, IImageHelper imageHelper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.httpContextAccessor = httpContextAccessor;
+            this.imageHelper = imageHelper;
             _user = httpContextAccessor.HttpContext.User;
         }
 
@@ -36,9 +40,11 @@ namespace Article.Service.Services.Concrete
             var userId = _user.GetLoggedInUserId();  // login olan kullanicinin id'si
             var userEmail = _user.GetLoggedInUserEmail();
 
-            var imageId = Guid.Parse("25A68467-8A27-45B7-9202-50241CEA50FC");
+            var imageUpload = await imageHelper.Upload(articleAddDto.Title,articleAddDto.Photo,ImageType.Post);
+            Image image = new(imageUpload.FullName,articleAddDto.Photo.ContentType,userEmail);
+            await unitOfWork.GetRepository<Image>().AddAsync(image);
 
-            var article = new Articlee(articleAddDto.Title, articleAddDto.Content, userId,userEmail,articleAddDto.CategoryId, imageId);
+            var article = new Articlee(articleAddDto.Title, articleAddDto.Content, userId,userEmail,articleAddDto.CategoryId, image.Id);
 
             await unitOfWork.GetRepository<Articlee>().AddAsync(article);
             await unitOfWork.SaveAsync();
@@ -58,7 +64,7 @@ namespace Article.Service.Services.Concrete
         public async Task<ArticleDto> GetArticleWithCategoryNonDeletedAsync(Guid articleId) 
         {
             // Kategorileri makalelere include ettik
-            var article = await unitOfWork.GetRepository<Articlee>().GetAsync(x => !x.IsDeleted && x.Id==articleId, x => x.Category); // (x.IsDeleted==False) IsDeleted'leri false olanlari getir 
+            var article = await unitOfWork.GetRepository<Articlee>().GetAsync(x => !x.IsDeleted && x.Id==articleId, x => x.Category,i=>i.Image); // (x.IsDeleted==False) IsDeleted'leri false olanlari getir 
 
             var map = mapper.Map<ArticleDto>(article);
 
@@ -68,8 +74,19 @@ namespace Article.Service.Services.Concrete
 
         public async Task<string> UpdateArticleAsync(ArticleUpdateDto articleUpdateDto)
         {
-            var article = await unitOfWork.GetRepository<Articlee>().GetAsync(x => !x.IsDeleted && x.Id == articleUpdateDto.Id, x => x.Category);
+            var article = await unitOfWork.GetRepository<Articlee>().GetAsync(x => !x.IsDeleted && x.Id == articleUpdateDto.Id, x => x.Category, i => i.Image);
             var userEmail = _user.GetLoggedInUserEmail();
+
+            if (articleUpdateDto.Photo != null) // articleUpdateDto'daki Photo null degilse yani bir resim secmisse
+            {
+                imageHelper.Delete(article.Image.FileName); // once makalede var olan resmi silecek
+
+                var imageUpload = await imageHelper.Upload(articleUpdateDto.Title, articleUpdateDto.Photo, ImageType.Post); // daha sonrasinda yeni resim yukleme islemleri yapilacak
+                Image image = new(imageUpload.FullName,articleUpdateDto.Photo.ContentType,userEmail);
+                await unitOfWork.GetRepository<Image>().AddAsync(image);
+
+                article.ImageId = image.Id; // makalenin resimId'sini yeni yukledigimiz resim Id'si ile degistiriyoruz
+            }
 
             article.Title= articleUpdateDto.Title;
             article.Content= articleUpdateDto.Content;
