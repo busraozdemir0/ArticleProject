@@ -11,7 +11,7 @@ namespace Article.Entity.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Guid ImageId { get; set; }   
+        public Guid ImageId { get; set; } = Guid.Parse("25A68467-8A27-45B7-9202-50241CEA50FC");
         public Image Image { get; set; }
         public ICollection<Articlee> Articles { get; set; }  // bir User birden fazla makale yazabilir
     }
