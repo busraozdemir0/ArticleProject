@@ -41,11 +41,11 @@
             }
             public static string Update(string userName)
             {
-                return $"{userName} email adresli başarıyla güncellendi.";
+                return $"{userName} email adresli kullanıcı başarıyla güncellendi.";
             }
             public static string Delete(string userName)
             {
-                return $"{userName} email adresli başarıyla silindi.";
+                return $"{userName} email adresli kullanıcı başarıyla silindi.";
             }
         }
     }

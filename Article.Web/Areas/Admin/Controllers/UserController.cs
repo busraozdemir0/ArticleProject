@@ -18,7 +18,7 @@ namespace Article.Web.Areas.Admin.Controllers
         private readonly IToastNotification toast;
         private readonly IMapper mapper;
 
-        public UserController(UserManager<AppUser> userManager,RoleManager<AppRole> roleManager, IToastNotification toast, IMapper mapper)
+        public UserController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IToastNotification toast, IMapper mapper)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -32,9 +32,9 @@ namespace Article.Web.Areas.Admin.Controllers
 
             foreach (var item in map) // maplenmis user'lar uzerinde gez
             {
-                var findUser=await userManager.FindByIdAsync(item.Id.ToString());  // user'in id'sini bul
-                var role = string.Join("",await userManager.GetRolesAsync(findUser));  // kullanicinin rolünü bul
-                                     //bu separator roller arasina koyacagi karakteri ifade eder
+                var findUser = await userManager.FindByIdAsync(item.Id.ToString());  // user'in id'sini bul
+                var role = string.Join("", await userManager.GetRolesAsync(findUser));  // kullanicinin rolünü bul
+                                                                                        //bu separator roller arasina koyacagi karakteri ifade eder
                 item.Role = role;
             }
 
@@ -44,7 +44,7 @@ namespace Article.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Add()
         {
             var roles = await roleManager.Roles.ToListAsync(); // tum rolleri bul
-            return View(new UserAddDto { Roles=roles}); // bulunan rolleri dto icerisindeki rollere esitleyerek view'a gonder
+            return View(new UserAddDto { Roles = roles }); // bulunan rolleri dto icerisindeki rollere esitleyerek view'a gonder
         }
         [HttpPost]
         public async Task<IActionResult> Add(UserAddDto userAddDto)
@@ -56,12 +56,12 @@ namespace Article.Web.Areas.Admin.Controllers
             {
                 map.UserName = userAddDto.Email; // proje senaryomuzda email ile kullanici adi ayni olacagi icin bastan esitliyoruz.
                 var result = await userManager.CreateAsync(map, string.IsNullOrEmpty(userAddDto.Password) ? "" : userAddDto.Password); // Null hatasindan dolayi; Sifre eger bossa "" bunu gonderecek. Bos degilse o password'u gonderecek
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     var findRole = await roleManager.FindByIdAsync(userAddDto.RoleId.ToString());
                     await userManager.AddToRoleAsync(map, findRole.ToString());
-                   
-                    toast.AddSuccessToastMessage(Messages.User.Add(userAddDto.Email), new ToastrOptions { Title = "Başarılı!" }); 
+
+                    toast.AddSuccessToastMessage(Messages.User.Add(userAddDto.Email), new ToastrOptions { Title = "Başarılı!" });
                     return RedirectToAction("Index", "User", new { Area = "Admin" });
                 }
                 else
@@ -74,6 +74,74 @@ namespace Article.Web.Areas.Admin.Controllers
             }
             return View(new UserAddDto { Roles = roles });
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid userId)
+        {
+            var user = await userManager.FindByIdAsync(userId.ToString());
+            var roles = await roleManager.Roles.ToListAsync();
+
+            var map = mapper.Map<UserUpdateDto>(user);
+            map.Roles = roles;
+            return View(map);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(UserUpdateDto userUpdateDto)
+        {
+            var user = await userManager.FindByIdAsync(userUpdateDto.Id.ToString()); // dto'daki id'den kullaniyi bul
+            if (user != null)
+            {
+                var userRole = string.Join("", await userManager.GetRolesAsync(user)); // bulunan kullanicinin rolunu cek
+                var roles = await roleManager.Roles.ToListAsync();
+                if (ModelState.IsValid)
+                {
+                    mapper.Map(userUpdateDto, user); //** asagidaki yorum satirindaki kisimlar bu satir ile otomatik yapilmis olacaktir
+
+                    //user.FirstName = userUpdateDto.FirstName;
+                    //user.LastName = userUpdateDto.LastName;
+                    //user.Email = userUpdateDto.Email;
+                    user.UserName = userUpdateDto.Email;
+                    user.SecurityStamp = Guid.NewGuid().ToString();
+
+                    var result = await userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        await userManager.RemoveFromRoleAsync(user, userRole); // oncelikle kullanici uzerinde yer alan rolu kaldiriyoruz
+                        var findRole = await roleManager.FindByIdAsync(userUpdateDto.RoleId.ToString()); // selectlist'den secilen rolun id'sine gore rolu bul
+                        await userManager.AddToRoleAsync(user, findRole.Name); // bulunan rolu guncellenecek olan kullaniciya ata
+                        toast.AddSuccessToastMessage(Messages.User.Update(userUpdateDto.Email), new ToastrOptions { Title = "Başarılı!" });
+                        return RedirectToAction("Index", "User", new { Area = "Admin" });
+                    }
+                    else
+                    {
+                        foreach (var errors in result.Errors)
+                            ModelState.AddModelError("", errors.Description);
+
+                        return View(new UserUpdateDto { Roles = roles });
+                    }
+                }
+            }
+
+            return NotFound(); // user'ı bulamazsa NotFound donecek
+        }
+        public async Task<IActionResult> Delete(Guid userId)
+        {
+            var user = await userManager.FindByIdAsync(userId.ToString());
+            var result = await userManager.DeleteAsync(user);  // Identity'nin ondelete metodlarında eger bir kullanici silinirse kullaniciya bagli olan roller de silinir.+
+                                                               // Bu yüzden ayriyetten rol silme silemi yapmamiza gerek kalmaz.
+
+            if (result.Succeeded)
+            {
+                toast.AddSuccessToastMessage(Messages.User.Delete(user.Email), new ToastrOptions { Title = "Başarılı!" });
+                return RedirectToAction("Index", "User", new { Area = "Admin" });
+            }
+            else
+            {
+                foreach (var errors in result.Errors)
+                    ModelState.AddModelError("", errors.Description);
+            }
+            return NotFound();
         }
     }
 }
