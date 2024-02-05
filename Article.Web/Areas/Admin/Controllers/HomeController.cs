@@ -1,5 +1,7 @@
-﻿using Article.Service.Services.Abstractions;
+﻿using Article.Entity.Entities;
+using Article.Service.Services.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Article.Web.Areas.Admin.Controllers
@@ -17,6 +19,7 @@ namespace Article.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var articles = await articleService.GetAllArticlesWithCategoryNonDeletedAsync();
+
             return View(articles);
         }
     }
