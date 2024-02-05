@@ -5,6 +5,7 @@ using Article.Service.Services.Abstractions;
 using Article.Web.ResultMessages;
 using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 
@@ -29,18 +30,21 @@ namespace Article.Web.Areas.Admin.Controllers
             this.toast = toast;
         }
         [HttpGet]
+        [Authorize(Roles ="SuperAdmin, Admin, User")]
         public async Task<IActionResult> Index()
         {
             var articles = await articleService.GetAllArticlesWithCategoryNonDeletedAsync();
             return View(articles);
         }
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> DeletedArticle()
         {
             var articles = await articleService.GetAllArticlesWithCategoryDeletedAsync();
             return View(articles);
         }
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Add()
         {
             // View tarafinda kategorileri acilir menude listelemek icin
@@ -50,6 +54,7 @@ namespace Article.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Add(ArticleAddDto articleAddDto)
         {
             var map = mapper.Map<Articlee>(articleAddDto);
@@ -71,6 +76,7 @@ namespace Article.Web.Areas.Admin.Controllers
 
         }
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Update(Guid articleId)
         {
             var article = await articleService.GetArticleWithCategoryNonDeletedAsync(articleId); // id'ye göre makaleyi getir
@@ -84,6 +90,7 @@ namespace Article.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Update(ArticleUpdateDto articleUpdateDto)
         {
             var map = mapper.Map<Articlee>(articleUpdateDto);
@@ -105,7 +112,7 @@ namespace Article.Web.Areas.Admin.Controllers
 
             return View(articleUpdateDto);
         }
-
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Delete(Guid articleId)
         {
             var title = await articleService.SafeDeleteArticleAsync(articleId);
@@ -113,6 +120,7 @@ namespace Article.Web.Areas.Admin.Controllers
 
             return RedirectToAction("Index", "Article", new { Area = "Admin" });
         }
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> UndoDelete(Guid articleId)
         {
             var title = await articleService.UndoDeleteArticleAsync(articleId);

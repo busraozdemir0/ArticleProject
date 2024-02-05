@@ -60,5 +60,11 @@ namespace Article.Web.Areas.Admin.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home", new {Area=""}); // Default home'a yonlenmesi icin Area icini bos biraktik
         }
+        [Authorize]  
+        [HttpGet]
+        public async Task<IActionResult> AccessDenied()
+        {
+            return View();
+        }
     }
 }
