@@ -9,7 +9,7 @@
     <div class="card">
         <div class="table-responsive text-nowrap m-5">
             @{
-                @if (!User.IsInRole("User"))  @* Eger kullanicinin rolü User degilse bu alani goster *@
+                @if (!User.IsInRole($"{RoleConsts.User}"))  @* Eger kullanicinin rolü User degilse bu alani goster *@
                 {
                     <a class="btn btn-success mb-3" asp-area="Admin" asp-controller="Article" asp-action="Add">
                         Makale Ekle <i class="bx bx-plus"></i>
@@ -27,7 +27,7 @@
                         <th>Oluşturan</th>
                         <th>Durum</th>
                         @{
-                            @if (!User.IsInRole("User"))
+                            @if (!User.IsInRole($"{RoleConsts.User}"))
                             {
                                 <th>İşlemler</th>
                             }
@@ -42,7 +42,7 @@
                         <th>Oluşturan</th>
                         <th>Durum</th>
                         @{
-                            @if (!User.IsInRole("User"))
+                            @if (!User.IsInRole($"{RoleConsts.User}"))
                             {
                                 <th>İşlemler</th>
                             }
@@ -60,7 +60,7 @@
                             <td>@article.CreatedBy</td>
                             <td>@(article.IsDeleted ? "Aktif Değil" : "Aktif")</td> @* eger makale silinmisse aktif degildir *@
                             @{
-                                @if (!User.IsInRole("User"))
+                                @if (!User.IsInRole($"{RoleConsts.User}"))
                                 {
                                     <td>
                                         @*  asp-route-articleId => articleId Controller tarafindaki get metodunda yer alan degisken adi ile ayni olmalidir *@
