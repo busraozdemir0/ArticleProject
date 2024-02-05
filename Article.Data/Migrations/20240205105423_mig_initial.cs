@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Article.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class miginitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -252,9 +252,9 @@ namespace Article.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("47acf50f-db96-4276-afe3-b86227094670"), "5134d821-0a40-4f10-9073-68a39c605d03", "Admin", "ADMIN" },
-                    { new Guid("5a445b3e-3728-4853-9362-b4fd9aab42cb"), "70aa7834-36bf-4484-aaa3-695978dd48c7", "SuperAdmin", "SUPERADMIN" },
-                    { new Guid("7b480a8e-6625-4f19-9378-eae2fe2da3cc"), "c4ea22ac-7bc0-4c85-94fb-c871371bf89f", "User", "USER" }
+                    { new Guid("47acf50f-db96-4276-afe3-b86227094670"), "3a053443-4ee4-4f33-b974-5a83bb26ec58", "Admin", "ADMIN" },
+                    { new Guid("5a445b3e-3728-4853-9362-b4fd9aab42cb"), "73e59192-1c2a-40ca-8908-680a6a44f973", "SuperAdmin", "SUPERADMIN" },
+                    { new Guid("7b480a8e-6625-4f19-9378-eae2fe2da3cc"), "b072d851-3e1f-4f2c-9606-b82efa1f4115", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
@@ -262,8 +262,8 @@ namespace Article.Data.Migrations
                 columns: new[] { "Id", "CreatedBy", "CreatedDate", "DeletedBy", "DeletedDate", "IsDeleted", "ModifiedBy", "ModifiedDate", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("6ba1f557-0cff-4ab6-8359-0ea298eeac6e"), "Admin Test", new DateTime(2024, 1, 31, 14, 31, 13, 179, DateTimeKind.Local).AddTicks(2555), null, null, false, null, null, "Visual Studio 2022" },
-                    { new Guid("d21f1e86-4ddf-4db0-b469-7bc63c1a7798"), "Admin Test", new DateTime(2024, 1, 31, 14, 31, 13, 179, DateTimeKind.Local).AddTicks(2538), null, null, false, null, null, "ASP.NET Core" }
+                    { new Guid("6ba1f557-0cff-4ab6-8359-0ea298eeac6e"), "Admin Test", new DateTime(2024, 2, 5, 13, 54, 22, 994, DateTimeKind.Local).AddTicks(383), null, null, false, null, null, "Visual Studio 2022" },
+                    { new Guid("d21f1e86-4ddf-4db0-b469-7bc63c1a7798"), "Admin Test", new DateTime(2024, 2, 5, 13, 54, 22, 994, DateTimeKind.Local).AddTicks(378), null, null, false, null, null, "ASP.NET Core" }
                 });
 
             migrationBuilder.InsertData(
@@ -271,8 +271,8 @@ namespace Article.Data.Migrations
                 columns: new[] { "Id", "CreatedBy", "CreatedDate", "DeletedBy", "DeletedDate", "FileName", "FileType", "IsDeleted", "ModifiedBy", "ModifiedDate" },
                 values: new object[,]
                 {
-                    { new Guid("25a68467-8a27-45b7-9202-50241cea50fc"), "Admin Test", new DateTime(2024, 1, 31, 14, 31, 13, 179, DateTimeKind.Local).AddTicks(3929), null, null, "images/testimage", "jpg", false, null, null },
-                    { new Guid("509d3d55-646b-413b-8f3e-01c5da780f76"), "Admin Test", new DateTime(2024, 1, 31, 14, 31, 13, 179, DateTimeKind.Local).AddTicks(3934), null, null, "images/vstest", "jpg", false, null, null }
+                    { new Guid("25a68467-8a27-45b7-9202-50241cea50fc"), "Admin Test", new DateTime(2024, 2, 5, 13, 54, 22, 994, DateTimeKind.Local).AddTicks(2126), null, null, "images/testimage", "jpg", false, null, null },
+                    { new Guid("509d3d55-646b-413b-8f3e-01c5da780f76"), "Admin Test", new DateTime(2024, 2, 5, 13, 54, 22, 994, DateTimeKind.Local).AddTicks(2131), null, null, "images/vstest", "jpg", false, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -280,8 +280,8 @@ namespace Article.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "ImageId", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("2ef7516c-3a35-4b40-a744-c3c7da3f6e20"), 0, "c6578bb5-03d7-49cd-a987-8232eb5a34a3", "admin@gmail.com", true, "Admin", new Guid("509d3d55-646b-413b-8f3e-01c5da780f76"), "Admin", false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEN/jk6pTTWhDYsME0aZgWwMCMP0wZfq1lgE9p8Q5p4OK8YsOUV+Ov2Ggr3FCDaVzlA==", "+901234567809", false, "82437787-c853-4907-b855-9c1a042c3f93", false, "admin@gmail.com" },
-                    { new Guid("324bdfde-4ddb-4333-9ed1-1e9e91226a73"), 0, "a35af3b1-db5a-48a1-9c21-a06c3f41d446", "superadmin@gmail.com", true, "Büşra", new Guid("25a68467-8a27-45b7-9202-50241cea50fc"), "Özdemir", false, null, "SUPERADMIN@GMAIL.COM", "SUPERADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEOvIwD6cu8pAoML5BqUfnAcCXSAJNXeCvZi5tPjNhVLOpJF73BuZkUsZHc1EjsdRQQ==", "+901234567890", true, "bfd8cf15-2d18-4978-bd74-148aec87c41e", false, "superadmin@gmail.com" }
+                    { new Guid("2ef7516c-3a35-4b40-a744-c3c7da3f6e20"), 0, "d8f24b59-6aef-4d78-a945-bbc89a8411b9", "admin@gmail.com", true, "Admin", new Guid("509d3d55-646b-413b-8f3e-01c5da780f76"), "Admin", false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAENANRasWS/ITPoQfsmc+Qh4tX2y56+LuuLHzxHQqauC/siRtHGFaBZb3sNEZ0JknuA==", "+901234567809", false, "5a680c04-3041-4909-8c6b-eab243b3a9ab", false, "admin@gmail.com" },
+                    { new Guid("324bdfde-4ddb-4333-9ed1-1e9e91226a73"), 0, "dd4242a7-1807-4a6c-9533-dea384b888ee", "superadmin@gmail.com", true, "Büşra", new Guid("25a68467-8a27-45b7-9202-50241cea50fc"), "Özdemir", false, null, "SUPERADMIN@GMAIL.COM", "SUPERADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAECcIUUUJRhzO+C0VbjsLkrqBxDPxPrIMo/Pfytqz/nSLkIrOtfiDYB7QpVhLBq69lQ==", "+901234567890", true, "bc38c390-5859-44bc-a60c-e8b3d338ac88", false, "superadmin@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -289,8 +289,8 @@ namespace Article.Data.Migrations
                 columns: new[] { "Id", "CategoryId", "Content", "CreatedBy", "CreatedDate", "DeletedBy", "DeletedDate", "ImageId", "IsDeleted", "ModifiedBy", "ModifiedDate", "Title", "UserId", "ViewCount" },
                 values: new object[,]
                 {
-                    { new Guid("22950ef6-73a8-49cd-9dae-3471482b8c7f"), new Guid("6ba1f557-0cff-4ab6-8359-0ea298eeac6e"), "Visual Studio is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "Admin Test", new DateTime(2024, 1, 31, 14, 31, 13, 179, DateTimeKind.Local).AddTicks(630), null, null, new Guid("509d3d55-646b-413b-8f3e-01c5da780f76"), false, null, null, "Visual Studio Deneme Makalesi", new Guid("2ef7516c-3a35-4b40-a744-c3c7da3f6e20"), 15 },
-                    { new Guid("e7db2b40-f1ed-4e5a-a2cd-868666d991a6"), new Guid("d21f1e86-4ddf-4db0-b469-7bc63c1a7798"), "Asp.Net Core is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "Admin Test", new DateTime(2024, 1, 31, 14, 31, 13, 179, DateTimeKind.Local).AddTicks(620), null, null, new Guid("25a68467-8a27-45b7-9202-50241cea50fc"), false, null, null, "Asp.Net Core Deneme Makalesi", new Guid("324bdfde-4ddb-4333-9ed1-1e9e91226a73"), 15 }
+                    { new Guid("04a3cd84-bbdb-4d7e-a87b-843577845d0c"), new Guid("6ba1f557-0cff-4ab6-8359-0ea298eeac6e"), "Visual Studio is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "Admin Test", new DateTime(2024, 2, 5, 13, 54, 22, 993, DateTimeKind.Local).AddTicks(8319), null, null, new Guid("509d3d55-646b-413b-8f3e-01c5da780f76"), false, null, null, "Visual Studio Deneme Makalesi", new Guid("2ef7516c-3a35-4b40-a744-c3c7da3f6e20"), 15 },
+                    { new Guid("868275fb-5aff-4fa6-a627-cd28a6e92287"), new Guid("d21f1e86-4ddf-4db0-b469-7bc63c1a7798"), "Asp.Net Core is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "Admin Test", new DateTime(2024, 2, 5, 13, 54, 22, 993, DateTimeKind.Local).AddTicks(8310), null, null, new Guid("25a68467-8a27-45b7-9202-50241cea50fc"), false, null, null, "Asp.Net Core Deneme Makalesi", new Guid("324bdfde-4ddb-4333-9ed1-1e9e91226a73"), 15 }
                 });
 
             migrationBuilder.InsertData(
