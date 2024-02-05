@@ -12,9 +12,11 @@ namespace Article.Service.Services.Abstractions
     {
         // Asenkron(islemlerin ayni anda calismamasi) bir islem yaptigimiz icin Task eklemeyi unutmamaliyiz
         Task<List<ArticleDto>> GetAllArticlesWithCategoryNonDeletedAsync();  // tum makaleleleri kategorleriyle birlikte silinmemis olanlari getir  
+        Task<List<ArticleDto>> GetAllArticlesWithCategoryDeletedAsync();  // silinmis olan makaleleri kategorileriyle birlikte listelemek icin
         Task<ArticleDto> GetArticleWithCategoryNonDeletedAsync(Guid articleId);
         Task CreateArticleAsync(ArticleAddDto articleAddDto);
         Task<string> UpdateArticleAsync(ArticleUpdateDto articleUpdateDto);  // guncellenen makalenin basligini cekebilmek icin string tipinde donus gerceklestirdik
         Task<string> SafeDeleteArticleAsync(Guid articleId);
+        Task<string> UndoDeleteArticleAsync(Guid articleId); // silinmis makaleyi geri almak icin
     }
 }

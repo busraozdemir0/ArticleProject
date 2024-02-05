@@ -81,5 +81,27 @@ namespace Article.Service.Services.Concrete
             return category.Name;
         }
 
+        public async Task<List<CategoryDto>> GetAllCategoriesDeleted()
+        {
+            var categories = await unitOfWork.GetRepository<Category>().GetAllAsync(x => x.IsDeleted);  
+            var map = mapper.Map<List<CategoryDto>>(categories);
+
+            return map;
+        }
+
+        public async Task<string> UndoDeleteCategoryAsync(Guid categoryId)
+        {
+            var category = await unitOfWork.GetRepository<Category>().GetByGuidAsync(categoryId);
+            var userEmail = _user.GetLoggedInUserEmail();
+
+            category.IsDeleted = false;
+            category.DeletedDate = null;
+            category.DeletedBy = null;
+
+            await unitOfWork.GetRepository<Category>().UpdateAsync(category);
+            await unitOfWork.SaveAsync();
+
+            return category.Name;
+        }
     }
 }

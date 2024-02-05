@@ -114,5 +114,29 @@ namespace Article.Service.Services.Concrete
 
             return article.Title;
         }
+
+        public async Task<List<ArticleDto>> GetAllArticlesWithCategoryDeletedAsync()
+        {
+            var articles = await unitOfWork.GetRepository<Articlee>().GetAllAsync(x => x.IsDeleted, x => x.Category); // (x.IsDeleted==True) IsDeleted'leri True olanlari yani silinmis olanlari getir 
+
+            var map = mapper.Map<List<ArticleDto>>(articles);
+
+            return map;
+        }
+
+        public async Task<string> UndoDeleteArticleAsync(Guid articleId)
+        {
+            var article = await unitOfWork.GetRepository<Articlee>().GetByGuidAsync(articleId);
+            var userEmail = _user.GetLoggedInUserEmail();
+
+            article.IsDeleted = false; 
+            article.DeletedDate = null;
+            article.DeletedBy = null;
+
+            await unitOfWork.GetRepository<Articlee>().UpdateAsync(article);
+            await unitOfWork.SaveAsync();
+
+            return article.Title;
+        }
     }
 }
