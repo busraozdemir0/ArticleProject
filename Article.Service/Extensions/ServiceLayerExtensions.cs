@@ -30,6 +30,7 @@ namespace Article.Service.Extensions
 
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IImageHelper, ImageHelper>();
             
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();  // mevcutta olan kullaniciyi(login olmus kullaniciyi) bulmamizi saglayacak olan kisim
