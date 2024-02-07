@@ -1,6 +1,9 @@
 ﻿$(document).ready(function () {
     var yearlyArticlesUrl = app.Urls.yearlyArticlesUrl;
+    var totalArticleCountUrl = app.Urls.totalArticleCount;
+    var totalCategoryCountUrl = app.Urls.totalCategoryCount;
 
+    // Yillik makale analizi (her ayda kac makale var)
     $.ajax({
         type: "GET",
         url: yearlyArticlesUrl,
@@ -274,6 +277,32 @@
                 totalRevenueChart.render();
             }
         }
-
     });
+
+    // Toplam makale sayisi
+    $.ajax({
+        type: "GET",
+        url: totalArticleCountUrl,
+        dataType: "json",
+        success: function (data) {
+            $("h3#totalArticleCount").append(data); // h3 tagi totalArticleCount id'li olana data'yi ekleme yap 
+        },
+        error: function () {
+            toastr.error("Makale analizleri yüklenirken hata oluştu", "Hata");
+        }
+    });
+
+    // Toplam kategori sayisi
+    $.ajax({
+        type: "GET",
+        url: totalCategoryCountUrl,
+        dataType: "json",
+        success: function (data) {
+            $("h3#totalCategoryCount").append(data);
+        },
+        error: function () {
+            toastr.error("Kategori analizleri yüklenirken hata oluştu", "Hata");
+        }
+    });
+    
 });

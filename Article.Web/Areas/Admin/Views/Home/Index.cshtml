@@ -27,13 +27,12 @@
                     <div class="d-flex align-items-end row">
                         <div class="col-sm-7">
                             <div class="card-body">
-                                <h5 class="card-title text-primary">Congratulations John! 🎉</h5>
+                                <h5 class="card-title text-primary">Hoş Geldiniz 🎉</h5>
                                 <p class="mb-4">
-                                    You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
-                                    your profile.
+                                    Haydi sitede yayınlanan birbirinden renkli ve eğlenceli makalelere bir göz atalım.
                                 </p>
 
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
+                                <a href="/Admin/Article/Index/" class="btn btn-sm btn-outline-primary">Makaleler</a>
                             </div>
                         </div>
                         <div class="col-sm-5 text-center text-sm-left">
@@ -54,29 +53,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
-                                    <div class="avatar flex-shrink-0">
-                                        <img src="~/admin/assets/img/icons/unicons/chart-success.png"
-                                             alt="chart success"
-                                             class="rounded" />
-                                    </div>
-                                    <div class="dropdown">
-                                        <button class="btn p-0"
-                                                type="button"
-                                                id="cardOpt3"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                        </div>
-                                    </div>
+                                    <i style="height:25px; font-size:2.25rem;" class="menu-icon bx bx-paper-plane"></i>
                                 </div>
-                                <span class="fw-semibold d-block mb-1">Profit</span>
-                                <h3 class="card-title mb-2">$12,628</h3>
-                                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                                <span class="fw-semibold d-block mb-1">Toplam <br /> Makale Sayısı</span>
+                                <h3 class="card-title mb-2" id="totalArticleCount"></h3> @* toplam makale sayisi gelecek (ajax ile) *@
+                                <small class="text-success fw-semibold"></small>
                             </div>
                         </div>
                     </div>
@@ -84,29 +65,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
-                                    <div class="avatar flex-shrink-0">
-                                        <img src="~/admin/assets/img/icons/unicons/wallet-info.png"
-                                             alt="Credit Card"
-                                             class="rounded" />
-                                    </div>
-                                    <div class="dropdown">
-                                        <button class="btn p-0"
-                                                type="button"
-                                                id="cardOpt6"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                        </div>
-                                    </div>
+                                    <i style="height:25px; font-size:2.25rem;" class="menu-icon bx bx-category"></i>
                                 </div>
-                                <span>Sales</span>
-                                <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+                                <span class="fw-semibold d-block mb-1">Toplam Eklenen <br /> Kategori Sayısı</span>
+                                <h3 class="card-title text-nowrap mb-1" id="totalCategoryCount"></h3>
+                                <small class="text-success fw-semibold"></small>
                             </div>
                         </div>
                     </div>
@@ -566,5 +529,7 @@
         app.Urls = app.Urls || {}
 
         app.Urls.yearlyArticlesUrl = "@(Url.Action("YearlyArticleCounts", "Home"))";
+        app.Urls.totalArticleCount = "@(Url.Action("TotalArticleCount", "Home"))";
+        app.Urls.totalCategoryCount = "@(Url.Action("TotalCategoryCount", "Home"))";
     </script>
 }

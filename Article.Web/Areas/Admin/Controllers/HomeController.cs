@@ -29,7 +29,19 @@ namespace Article.Web.Areas.Admin.Controllers
         public async Task<IActionResult> YearlyArticleCounts()
         {
             var count = await dashboardService.GetYearlyArticleCounts();
-            return Json(JsonConvert.SerializeObject(count));
+            return Json(JsonConvert.SerializeObject(count)); // dizi seklinde olmasi icin Serialize ediyoruz
+        }
+        [HttpGet]
+        public async Task<IActionResult> TotalArticleCount()
+        {
+            var count = await dashboardService.GetTotalArticleCount();
+            return Json(count);
+        }
+        [HttpGet]
+        public async Task<IActionResult> TotalCategoryCount()
+        {
+            var count = await dashboardService.GetTotalCategoryCount();
+            return Json(count);
         }
     }
 }

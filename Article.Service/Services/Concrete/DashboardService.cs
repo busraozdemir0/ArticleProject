@@ -36,5 +36,16 @@ namespace Article.Service.Services.Concrete
             }
             return datas;
         }
+        public async Task<int> GetTotalArticleCount() // toplam makale sayisi(hem silinmis hem silinmemis makaler baz alinacak)
+        {
+            var articleCount = await unitOfWork.GetRepository<Articlee>().CountAsync();
+            return articleCount;
+        }
+        public async Task<int> GetTotalCategoryCount() // toplam kategori sayisi
+        {
+            var categoryCount = await unitOfWork.GetRepository<Category>().CountAsync();
+            return categoryCount;
+        }
+
     }
 }
