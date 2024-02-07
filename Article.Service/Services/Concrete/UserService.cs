@@ -1,4 +1,5 @@
-﻿using Article.Data.UnifOfWorks;
+﻿using Article.Data.Context;
+using Article.Data.UnifOfWorks;
 using Article.Entity.DTOs.Users;
 using Article.Entity.Entities;
 using Article.Entity.Enums;
@@ -133,7 +134,7 @@ namespace Article.Service.Services.Concrete
         private async Task<Guid> UploadImageForUser(UserProfileDto userProfileDto)
         {
             var userEmail = _user.GetLoggedInUserEmail();
-            // resim yükleme işlemleri
+            // resim yukleme islemleri
             var imageUpload = await imageHelper.Upload($"{userProfileDto.FirstName} {userProfileDto.LastName}", userProfileDto.Photo, ImageType.User);
             Image image = new(imageUpload.FullName, userProfileDto.Photo.ContentType, userEmail);
             await unitOfWork.GetRepository<Image>().AddAsync(image);
@@ -158,13 +159,9 @@ namespace Article.Service.Services.Concrete
 
                     mapper.Map(userProfileDto,user); // mapleme islemi
 
-                    if (userProfileDto.Photo != null)
-                    // eger resim secmemisse vt'ye kaydolan varsayilan foto gelecek
-                    {
-                        // resim yukleme islemi
+                    if (userProfileDto.Photo != null) // resim sectiyse resim yukleme islemi
                         user.ImageId = await UploadImageForUser(userProfileDto);
-                    }
-
+                    
                     await userManager.UpdateAsync(user);
                     await unitOfWork.SaveAsync();
 
@@ -181,8 +178,7 @@ namespace Article.Service.Services.Concrete
 
                 mapper.Map(userProfileDto,user); // mapleme islemi
 
-                if (userProfileDto.Photo != null)
-                    // resim yukleme islemi
+                if (userProfileDto.Photo != null) // resim sectiyse resim yukleme islemi
                     user.ImageId = await UploadImageForUser(userProfileDto);
 
                 await userManager.UpdateAsync(user);
