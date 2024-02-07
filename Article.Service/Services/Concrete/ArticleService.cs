@@ -89,7 +89,7 @@ namespace Article.Service.Services.Concrete
         public async Task<ArticleDto> GetArticleWithCategoryNonDeletedAsync(Guid articleId) 
         {
             // Kategorileri makalelere include ettik
-            var article = await unitOfWork.GetRepository<Articlee>().GetAsync(x => !x.IsDeleted && x.Id==articleId, x => x.Category,i=>i.Image); // (x.IsDeleted==False) IsDeleted'leri false olanlari getir 
+            var article = await unitOfWork.GetRepository<Articlee>().GetAsync(x => !x.IsDeleted && x.Id==articleId, x => x.Category,i=>i.Image, u=>u.User); // (x.IsDeleted==False) IsDeleted'leri false olanlari getir 
 
             var map = mapper.Map<ArticleDto>(article);
 

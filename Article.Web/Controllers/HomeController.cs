@@ -1,4 +1,5 @@
-﻿using Article.Service.Services.Abstractions;
+﻿using Article.Entity.DTOs.Articles;
+using Article.Service.Services.Abstractions;
 using Article.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -26,6 +27,11 @@ namespace Article.Web.Controllers
         {
             var articles = await articleService.SearchAsync(keyword, currentPage, pageSize, isAscending);
             return View(articles);
+        }
+        public async Task<IActionResult> Detail(Guid id)
+        {
+            var article=await articleService.GetArticleWithCategoryNonDeletedAsync(id);
+            return View(article);
         }
 
         public IActionResult Privacy()
