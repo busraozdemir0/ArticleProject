@@ -23,7 +23,7 @@ namespace Article.Service.FluentValidations
                 .NotEmpty()
                 .NotNull()
                 .MinimumLength(3)
-                .MaximumLength(200)
+                .MaximumLength(5000)
                 .WithName("İçerik");
         }
     }

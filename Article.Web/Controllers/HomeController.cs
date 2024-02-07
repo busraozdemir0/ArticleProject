@@ -16,10 +16,10 @@ namespace Article.Web.Controllers
             this.articleService = articleService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid? categoryId, int currentPage=1, int pageSize=3, bool isAscending=false)
         {
-            var articles = await articleService.GetAllArticlesWithCategoryNonDeletedAsync();
-            return View(articles);  // makaleleri index sayfasina gönder anlamina gelir
+            var articles = await articleService.GetAllByPagingAsync(categoryId,currentPage,pageSize,isAscending);
+            return View(articles);  
         }
 
         public IActionResult Privacy()

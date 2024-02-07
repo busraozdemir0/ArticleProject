@@ -66,7 +66,7 @@ namespace Article.Web.Areas.Admin.Controllers
                 await articleService.CreateArticleAsync(articleAddDto);
                 toast.AddSuccessToastMessage(Messages.Article.Add(articleAddDto.Title), new ToastrOptions { Title="Başarılı!"});  // ResultMessages folder altinda Messages sinifinda ekleme ve guncelleme islemleri icin makale adina gore static mesajlar yazildi
 
-                return RedirectToAction("Index", "Home", new { Area = "Admin" });
+                return RedirectToAction("Index", "Article", new { Area = "Admin" });
             }
             else
             {

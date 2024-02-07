@@ -18,5 +18,6 @@ namespace Article.Service.Services.Abstractions
         Task<string> UpdateArticleAsync(ArticleUpdateDto articleUpdateDto);  // guncellenen makalenin basligini cekebilmek icin string tipinde donus gerceklestirdik
         Task<string> SafeDeleteArticleAsync(Guid articleId);
         Task<string> UndoDeleteArticleAsync(Guid articleId); // silinmis makaleyi geri almak icin
+        Task<ArticleListDto> GetAllByPagingAsync(Guid? categoryId, int currentPage = 1, int pageSize = 3, bool isAscending = false);
     }
 }

@@ -23,7 +23,7 @@ namespace Article.Data.Repositories.Concretes
 
 
         // Ornegin herhangi bir Article icerisindeki gorselin adini cekebilmek icin Image ve Article tablosu include edilmelidir bu metoddaki parametreler de o işe yarar
-        public async Task<List<T>> GetAllAsync(Expression<Func<T,bool>> predicate=null,params Expression<Func<T, object>>[] includeProperties)
+        public async Task<List<T>> GetAllAsync(Expression<Func<T,bool>> predicate=null,params Expression<Func<T, object>>[] includeProperties) // params = degisken sayida parametre alabilmesi demektir
         {
             IQueryable<T> query = Table;
 

@@ -33,6 +33,31 @@ namespace Article.Service.Services.Concrete
             this.imageHelper = imageHelper;
         }
 
+        // Manuel olarak paging islemi
+        public async Task<ArticleListDto> GetAllByPagingAsync(Guid? categoryId, int currentPage=1, int pageSize=3, bool isAscending = false)
+        {
+            pageSize = pageSize > 20 ? 20 : pageSize; // sayfa sayisi 20'den buyuk mu
+
+            var articles = categoryId == null
+                ? await unitOfWork.GetRepository<Articlee>().GetAllAsync(a => !a.IsDeleted, a => a.Category, i => i.Image, u => u.User) // Category, Image ve User include edilmis bir sekilde silinmemis olan makaleler(makaleyi yazanin adi ve soyadina erisebilmek icin User'i da include ettik)
+                : await unitOfWork.GetRepository<Articlee>().GetAllAsync(a => a.CategoryId == categoryId && !a.IsDeleted, c => c.Category, i => i.Image, u => u.User);
+
+            var sortedArticles = isAscending // isAscending True ise artan bir sekilde(tarihe gore) siralama yapilacak. False ise azalan bir sekilde(tarihe gore) siralama yapilacak
+                ? articles.OrderBy(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList()
+                : articles.OrderByDescending(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+
+            return new ArticleListDto
+            {
+                Articles = sortedArticles,
+                CategoryId = categoryId == null ? null : categoryId.Value,
+                CurrentPage=currentPage,
+                PageSize=pageSize,
+                TotalCount=articles.Count,
+                IsAscending=isAscending
+            };
+
+        }
+
         public async Task CreateArticleAsync(ArticleAddDto articleAddDto)
         {
             // var userId = Guid.Parse("324BDFDE-4DDB-4333-9ED1-1E9E91226A73");
