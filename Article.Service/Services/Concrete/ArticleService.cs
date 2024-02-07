@@ -163,5 +163,27 @@ namespace Article.Service.Services.Concrete
 
             return article.Title;
         }
+
+        public async Task<ArticleListDto> SearchAsync(string keyword, int currentPage = 1, int pageSize = 3, bool isAscending = false)
+        {
+            pageSize = pageSize > 20 ? 20 : pageSize; // sayfa sayisi 20'den buyuk mu
+
+            var articles = await unitOfWork.GetRepository<Articlee>().GetAllAsync(
+                    a => !a.IsDeleted && (a.Title.Contains(keyword) || a.Content.Contains(keyword) || a.Category.Name.Contains(keyword)), // makale silinmemisse ve aranan ifade makalenin basliginda veya iceriginde veya kategorisinde geciyorsa bunu dondur.
+                    a => a.Category, i => i.Image, u => u.User); // Category, Image ve User include edilmis bir sekilde silinmemis olan makaleler(makaleyi yazanin adi ve soyadina erisebilmek icin User'i da include ettik)
+            
+            var sortedArticles = isAscending // isAscending True ise artan bir sekilde(tarihe gore) siralama yapilacak. False ise azalan bir sekilde(tarihe gore) siralama yapilacak
+                ? articles.OrderBy(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList()
+                : articles.OrderByDescending(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+
+            return new ArticleListDto
+            {
+                Articles = sortedArticles,
+                CurrentPage = currentPage,
+                PageSize = pageSize,
+                TotalCount = articles.Count,
+                IsAscending = isAscending
+            };
+        }
     }
 }
