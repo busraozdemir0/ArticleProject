@@ -3,6 +3,7 @@ using Article.Data.Extensions;
 using Article.Entity.Entities;
 using Article.Service.Describers;
 using Article.Service.Extensions;
+using Article.Web.Filters.ArticleVisitors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
@@ -19,7 +20,10 @@ builder.Services.LoadServiceLayerExtension();
 builder.Services.AddSession();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews()
+builder.Services.AddControllersWithViews(opt =>
+    {
+        opt.Filters.Add<ArticleVisitorFilter>(); // giren kullanicinin ip adresi eger Visitor tablosunda yoksa tabloya kaydedecek olan filter
+    })
     .AddNToastNotifyToastr(new ToastrOptions()
     {
         PositionClass=ToastPositions.TopRight,  // bildirimin sag ustte cikmasini sagladik
