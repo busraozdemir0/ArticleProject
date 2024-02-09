@@ -11,6 +11,7 @@ namespace Article.Service.Services.Abstractions
     public interface ICategoryService
     {
         Task<List<CategoryDto>> GetAllCategoriesNonDeleted();
+        Task<List<CategoryDto>> GetAllCategoriesNonDeletedTake24(); // anasayfada kategorileri listelemek icin (en fazla 24 kategori listelenecek)
         Task<List<CategoryDto>> GetAllCategoriesDeleted();
         Task CreateCategoryAsync(CategoryAddDto categoryAddDto);
         Task<Category> GetCategoryByGuid(Guid id);

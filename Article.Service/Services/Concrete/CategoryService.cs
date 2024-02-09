@@ -37,6 +37,13 @@ namespace Article.Service.Services.Concrete
 
             return map;
         }
+        public async Task<List<CategoryDto>> GetAllCategoriesNonDeletedTake24() // anasayfada kategorileri listelemek icin (en fazla 24 kategori listelenecek)
+        {
+            var categories = await unitOfWork.GetRepository<Category>().GetAllAsync(x => !x.IsDeleted);
+            var map = mapper.Map<List<CategoryDto>>(categories);
+
+            return map.Take(24).ToList();
+        }
         public async Task CreateCategoryAsync(CategoryAddDto categoryAddDto)
         {
             var userEmail = _user.GetLoggedInUserEmail();
@@ -103,5 +110,7 @@ namespace Article.Service.Services.Concrete
 
             return category.Name;
         }
+
+
     }
 }
