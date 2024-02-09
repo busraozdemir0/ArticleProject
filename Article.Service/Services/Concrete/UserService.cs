@@ -123,7 +123,7 @@ namespace Article.Service.Services.Concrete
         public async Task<UserProfileDto> GetUserProfileAsync()
         {
             var userId = _user.GetLoggedInUserId();
-            var getUserWithImage = await unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == userId, x => x.Image); // x=>x.Image > image'ini include etmek sitedigimiz icin bu sekilde kullaniyoruz
+            var getUserWithImage = await unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == userId, x => x.Image); // x=>x.Image > image'ini include etmek istedigimiz icin bu sekilde kullaniyoruz
 
             var map = mapper.Map<UserProfileDto>(getUserWithImage);
 

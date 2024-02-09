@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Article.Entity.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace Article.Entity.DTOs.Users
         public string PhoneNumber { get; set; }
         public int AccessFailedCount { get; set; }
         public string Role { get; set; }
+        public Image Image { get; set; }
 
     }
 }

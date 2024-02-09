@@ -1,0 +1,16 @@
+﻿@model List<ArticleDto>
+
+<div class="content">
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.Id">
+                    <h5>@item.Title</h5>
+                    <span>@item.Content.Substring(0,50) ...</span>
+                    <span>@(((DateTime)item.CreatedDate).ToString("dd-MM-yyyy"))</span>
+                </a>
+            </li>
+        }
+    </ul>
+</div>

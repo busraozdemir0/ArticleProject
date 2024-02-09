@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]- Article.Web</title>
+    <title>Article - Ana Sayfa</title>
+    @*icon*@
+    <link rel="icon" type="image/png" href="~/home.png" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Article.Web.styles.css" asp-append-version="true" />
@@ -38,23 +40,29 @@
                 <div class="collapse navbar-collapse" style="flex-grow:0" id="navbarResponsive">
                     @* flex-grow:0 => elemanlari saga dayali yapmak icin *@
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" target="_blank" href="index.html">
+                        <li class="nav-item">
+                            <a class="nav-link" target="_blank" href="#">
                                 <i style="font-size:22px" class="fa-brands fa-linkedin-in"></i>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about.html">
+                            <a class="nav-link" href="#">
                                 <i style="font-size:22px;" class="fa-brands fa-github"></i>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="blog.html">
+                            <a class="nav-link" href="#">
                                 <i style="font-size:22px;" class="fa-brands fa-youtube"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                                <i class="fa-solid fa-user-tie"></i> Admin Paneli
                             </a>
                         </li>
                     </ul>
                 </div>
+
             </div>
         </nav>
     </header>
@@ -165,9 +173,6 @@
     </div>
     <!-- Banner Ends Here -->
 
-
-    <div style="height:150px;"></div>
-
     @RenderBody()
 
 
@@ -178,17 +183,17 @@
                     <ul class="social-icons">
                         <li><a href="#">Facebook</a></li>
                         <li><a href="#">Twitter</a></li>
-                        <li><a href="#">Behance</a></li>
+                        <li><a href="#">Instagram</a></li>
                         <li><a href="#">Linkedin</a></li>
-                        <li><a href="#">Dribbble</a></li>
+                        <li><a href="#">Github</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-12">
                     <div class="copyright-text">
                         <p>
-                            Copyright 2020 Stand Blog Co.
+                            Copyright @DateTime.Now.Year Article Blog.
 
-                            | Design: <a rel="nofollow" href="https://templatemo.com" target="_parent">TemplateMo</a>
+                            | Design: <a rel="nofollow" href="https://templatemo.com" target="_blank">TemplateMo</a>
                         </p>
                     </div>
                 </div>

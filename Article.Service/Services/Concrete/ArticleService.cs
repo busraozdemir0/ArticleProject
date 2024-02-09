@@ -185,5 +185,16 @@ namespace Article.Service.Services.Concrete
                 IsAscending = isAscending
             };
         }
+
+        public async Task<List<ArticleDto>> GetAllArticlesMostViewedAsync() // ana sayfada en cok goruntulenen 3 makale listelenecek
+        {
+            var articles = await unitOfWork.GetRepository<Articlee>().GetAllAsync();
+
+            var sortedArticles = articles.OrderByDescending(x => x.ViewCount).ToList();
+
+            var map = mapper.Map<List<ArticleDto>>(sortedArticles);
+
+            return map.Take(3).ToList();
+        }
     }
 }
