@@ -83,7 +83,7 @@ namespace Article.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UserUpdateDto userUpdateDto)
         {
-            var user = await userService.GetAppUserByIdAsync(userUpdateDto.Id); // dto'daki id'den kullaniyi bul
+            var user = await userService.GetAppUserByIdAsync(userUpdateDto.Id); // dto'daki id'den kullaniciyi bul
 
             if (user != null)
             {
