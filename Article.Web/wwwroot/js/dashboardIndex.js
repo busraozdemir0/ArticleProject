@@ -2,6 +2,9 @@
     var yearlyArticlesUrl = app.Urls.yearlyArticlesUrl;
     var totalArticleCountUrl = app.Urls.totalArticleCount;
     var totalCategoryCountUrl = app.Urls.totalCategoryCount;
+    var totalAdminCountUrl = app.Urls.totalAdminCount;
+    var totalRoleCountUrl = app.Urls.totalRoleCount;
+    var totalArticleViewsCountUrl = app.Urls.totalArticleViewsCount;
 
     // Yillik makale analizi (her ayda kac makale var)
     $.ajax({
@@ -302,6 +305,45 @@
         },
         error: function () {
             toastr.error("Kategori analizleri yüklenirken hata oluştu", "Hata");
+        }
+    });
+
+    // Toplam admin kullanicisi sayisi
+    $.ajax({
+        type: "GET",
+        url: totalAdminCountUrl,
+        dataType: "json",
+        success: function (data) {
+            $("h3#totalAdminCount").append(data);
+        },
+        error: function () {
+            toastr.error("Admin analizleri yüklenirken hata oluştu", "Hata");
+        }
+    });
+
+    // Toplam rol sayisi
+    $.ajax({
+        type: "GET",
+        url: totalRoleCountUrl,
+        dataType: "json",
+        success: function (data) {
+            $("h3#totalRoleCount").append(data);
+        },
+        error: function () {
+            toastr.error("Rol analizleri yüklenirken hata oluştu", "Hata");
+        }
+    });
+
+    // Makalelerin toplam goruntulenme sayisi
+    $.ajax({
+        type: "GET",
+        url: totalArticleViewsCountUrl,
+        dataType: "json",
+        success: function (data) {
+            $("h3#totalArticleViewsCount").append(data);
+        },
+        error: function () {
+            toastr.error("Makale görüntülenme analizleri yüklenirken hata oluştu", "Hata");
         }
     });
     

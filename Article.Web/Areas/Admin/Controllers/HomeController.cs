@@ -43,5 +43,23 @@ namespace Article.Web.Areas.Admin.Controllers
             var count = await dashboardService.GetTotalCategoryCount();
             return Json(count);
         }
+        [HttpGet]
+        public async Task<IActionResult> TotalAdminCount()
+        {
+            var count = await dashboardService.GetTotalAdminCount();
+            return Json(count);
+        }
+        [HttpGet]
+        public async Task<IActionResult> TotalRoleCount()
+        {
+            var count = await dashboardService.GetTotalRoleCount();
+            return Json(count);
+        }
+        [HttpGet]
+        public async Task<IActionResult> TotalArticleViewsCount()
+        {
+            var count = await dashboardService.GetTotalArticleViewsCount(); // makalelerin toplam goruntulenme sayisi
+            return Json(count);
+        }
     }
 }

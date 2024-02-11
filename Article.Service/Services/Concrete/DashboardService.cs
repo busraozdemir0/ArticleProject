@@ -1,6 +1,8 @@
 ﻿using Article.Data.UnifOfWorks;
 using Article.Entity.Entities;
 using Article.Service.Services.Abstractions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,10 +15,14 @@ namespace Article.Service.Services.Concrete
     public class DashboardService:IDashboardService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly UserManager<AppUser> userManager;
+        private readonly RoleManager<AppRole> roleManager;
 
-        public DashboardService(IUnitOfWork unitOfWork) 
+        public DashboardService(IUnitOfWork unitOfWork,UserManager<AppUser> userManager, RoleManager<AppRole> roleManager) 
         {
             this.unitOfWork = unitOfWork;
+            this.userManager = userManager;
+            this.roleManager = roleManager;
         }
         public async Task<List<int>> GetYearlyArticleCounts() // yillik yayinlanan makale analizi
         {
@@ -47,5 +53,40 @@ namespace Article.Service.Services.Concrete
             return categoryCount;
         }
 
+        public async Task<int> GetTotalAdminCount()
+        {
+            List<AppUser> adminCount = await userManager.Users.ToListAsync(); // tum kullanicilar listeleniyor
+
+            int count = 0;
+
+            foreach(var user in adminCount)  // kullanicilar uzerinde gezinerek
+            {
+                if(string.Join("", await userManager.GetRolesAsync(user)) == "Admin" || string.Join("", await userManager.GetRolesAsync(user)) == "SuperAdmin") // kullanicinin rolü Admin veya SuperAdmin ise count 1 arttirilacak
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        public async Task<int> GetTotalRoleCount()
+        {
+            var roleCount=await roleManager.Roles.CountAsync();
+            return roleCount;
+        }
+
+        public async Task<int> GetTotalArticleViewsCount()
+        {
+            List<Articlee> articles = await unitOfWork.GetRepository<Articlee>().GetAllAsync();
+
+            int totalViews = 0;
+
+            foreach(var article in articles)
+            {
+                totalViews = totalViews + article.ViewCount;
+            }
+            return totalViews;
+        }
     }
 }
