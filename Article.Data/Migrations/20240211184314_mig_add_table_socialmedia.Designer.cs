@@ -4,6 +4,7 @@ using Article.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Article.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240211184314_mig_add_table_socialmedia")]
+    partial class migaddtablesocialmedia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,21 +56,21 @@ namespace Article.Data.Migrations
                         new
                         {
                             Id = new Guid("5a445b3e-3728-4853-9362-b4fd9aab42cb"),
-                            ConcurrencyStamp = "7aa2ab5a-54c5-41da-b864-d9a3eef34e95",
+                            ConcurrencyStamp = "61be5781-0ec3-467c-a3e8-8c7e4ee9f97c",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = new Guid("47acf50f-db96-4276-afe3-b86227094670"),
-                            ConcurrencyStamp = "e3f9b6a4-11a9-4f41-98b1-53ebd91a35ed",
+                            ConcurrencyStamp = "220ae829-6bb7-4f4e-94e0-ef6c8c8b1422",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("7b480a8e-6625-4f19-9378-eae2fe2da3cc"),
-                            ConcurrencyStamp = "81063d87-f964-4857-8bcc-e61f42f689c3",
+                            ConcurrencyStamp = "63ebd603-4e73-487a-9a46-5f567698458e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -180,7 +183,7 @@ namespace Article.Data.Migrations
                         {
                             Id = new Guid("324bdfde-4ddb-4333-9ed1-1e9e91226a73"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "edc82977-e7af-4fe3-933e-16589875b892",
+                            ConcurrencyStamp = "59caefde-df44-478e-b9c2-53f76ef6050b",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Büşra",
@@ -189,10 +192,10 @@ namespace Article.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                             NormalizedUserName = "SUPERADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMXQcB9HPukWVyf1BUksLqU8bR0j2gFPd4rMYx1NNhkGKrKoqRZckn6YI3uUE+F17g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENT3/CBkuYQ2HGx4mnH/rptaJI/F5d4gLy7OaN37U4oitT8QYH5o7yFq42VqUuz+2Q==",
                             PhoneNumber = "+901234567890",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "30abbc38-0f6f-4f5a-9e45-f0520b469bf1",
+                            SecurityStamp = "ed192c88-b3d7-4ce3-8215-21a2a23e0fc8",
                             TwoFactorEnabled = false,
                             UserName = "superadmin@gmail.com"
                         },
@@ -200,7 +203,7 @@ namespace Article.Data.Migrations
                         {
                             Id = new Guid("2ef7516c-3a35-4b40-a744-c3c7da3f6e20"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "151e0f1c-9f1c-4900-9b1a-48397c4b7757",
+                            ConcurrencyStamp = "d96f2dbb-929b-463a-924a-b89d95ac7d1b",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -209,10 +212,10 @@ namespace Article.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAJ7p5H9taCXh0y5Q2V2Vb6EG2tkNGXTFo7KT2fpv6RI9U+XoagjFcCz4f+ewIXz4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDSaYcP5P/qFAFu3PDT7RqK24PBMDquzAnymkmatS37YK15+f3mj+DCVBlYh1OX3QQ==",
                             PhoneNumber = "+901234567809",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d3345aba-9cd6-4fe0-a866-aad843d19d77",
+                            SecurityStamp = "b6100c64-ca93-4341-81a1-f879421a0093",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -388,11 +391,11 @@ namespace Article.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("edea0cae-08ce-426b-adc7-e20a33dca278"),
+                            Id = new Guid("300e565e-3fc8-4e55-9788-8a3100ca628d"),
                             CategoryId = new Guid("d21f1e86-4ddf-4db0-b469-7bc63c1a7798"),
                             Content = "Asp.Net Core is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 2, 11, 22, 36, 5, 239, DateTimeKind.Local).AddTicks(548),
+                            CreatedDate = new DateTime(2024, 2, 11, 21, 43, 13, 197, DateTimeKind.Local).AddTicks(7205),
                             ImageId = new Guid("25a68467-8a27-45b7-9202-50241cea50fc"),
                             IsDeleted = false,
                             Title = "Asp.Net Core Deneme Makalesi",
@@ -401,11 +404,11 @@ namespace Article.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a977b89f-e9b0-4fde-ba8b-367718752b97"),
+                            Id = new Guid("71189e5b-4db9-42fa-9176-aa5f7a4cd492"),
                             CategoryId = new Guid("6ba1f557-0cff-4ab6-8359-0ea298eeac6e"),
                             Content = "Visual Studio is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 2, 11, 22, 36, 5, 239, DateTimeKind.Local).AddTicks(558),
+                            CreatedDate = new DateTime(2024, 2, 11, 21, 43, 13, 197, DateTimeKind.Local).AddTicks(7221),
                             ImageId = new Guid("509d3d55-646b-413b-8f3e-01c5da780f76"),
                             IsDeleted = false,
                             Title = "Visual Studio Deneme Makalesi",
@@ -455,7 +458,7 @@ namespace Article.Data.Migrations
                         {
                             Id = new Guid("d21f1e86-4ddf-4db0-b469-7bc63c1a7798"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 2, 11, 22, 36, 5, 240, DateTimeKind.Local).AddTicks(5254),
+                            CreatedDate = new DateTime(2024, 2, 11, 21, 43, 13, 198, DateTimeKind.Local).AddTicks(3953),
                             IsDeleted = false,
                             Name = "ASP.NET Core"
                         },
@@ -463,7 +466,7 @@ namespace Article.Data.Migrations
                         {
                             Id = new Guid("6ba1f557-0cff-4ab6-8359-0ea298eeac6e"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 2, 11, 22, 36, 5, 240, DateTimeKind.Local).AddTicks(5281),
+                            CreatedDate = new DateTime(2024, 2, 11, 21, 43, 13, 198, DateTimeKind.Local).AddTicks(3970),
                             IsDeleted = false,
                             Name = "Visual Studio 2022"
                         });
@@ -514,7 +517,7 @@ namespace Article.Data.Migrations
                         {
                             Id = new Guid("25a68467-8a27-45b7-9202-50241cea50fc"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 2, 11, 22, 36, 5, 240, DateTimeKind.Local).AddTicks(8630),
+                            CreatedDate = new DateTime(2024, 2, 11, 21, 43, 13, 198, DateTimeKind.Local).AddTicks(5734),
                             FileName = "images/testimage",
                             FileType = "jpg",
                             IsDeleted = false
@@ -523,7 +526,7 @@ namespace Article.Data.Migrations
                         {
                             Id = new Guid("509d3d55-646b-413b-8f3e-01c5da780f76"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2024, 2, 11, 22, 36, 5, 240, DateTimeKind.Local).AddTicks(8636),
+                            CreatedDate = new DateTime(2024, 2, 11, 21, 43, 13, 198, DateTimeKind.Local).AddTicks(5739),
                             FileName = "images/vstest",
                             FileType = "jpg",
                             IsDeleted = false
@@ -538,19 +541,6 @@ namespace Article.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("GithubUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -563,18 +553,9 @@ namespace Article.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LinkedinUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("TwitterUrl")
                         .IsRequired()
@@ -583,20 +564,6 @@ namespace Article.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SocialMedias");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 2, 11, 22, 36, 5, 243, DateTimeKind.Local).AddTicks(9259),
-                            GithubUrl = "test",
-                            GmailUrl = "test",
-                            InstagramUrl = "test",
-                            IsDeleted = false,
-                            LinkedinUrl = "test",
-                            TwitterUrl = "test"
-                        });
                 });
 
             modelBuilder.Entity("Article.Entity.Entities.Visitor", b =>

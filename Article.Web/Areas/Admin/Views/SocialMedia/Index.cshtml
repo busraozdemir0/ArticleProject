@@ -1,0 +1,58 @@
+﻿@model List<SocialMediaDto>
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">Sosyal Medya Yönetimi /</span> Linkler
+    </h4>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+        <div class="table-responsive text-nowrap m-5">
+
+            <!-- Hoverable Table rows -->
+            <div class="card">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Gmail URL</th>
+                                <th>Instagram URL</th>
+                                <th>Twitter URL</th>
+                                <th>Linkedin URL</th>
+                                <th>GitHub URL</th>
+                                <th>Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> @item.GmailUrl</td>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> @item.InstagramUrl</td>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> @item.TwitterUrl</td>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> @item.LinkedinUrl</td>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> @item.GithubUrl</td>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                        <a class="btn btn-primary btn-sm" data-id="@item.Id" asp-area="Admin" asp-controller="SocialMedia" asp-action="Update" asp-route-id="@item.Id"><i class="bx bxs-edit"></i></a>
+                                    
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--/ Hoverable Table rows -->
+
+
+        </div>
+    </div>
+    <!--/ Basic Bootstrap Table -->
+
+
+
+
+</div>
+

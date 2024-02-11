@@ -172,7 +172,6 @@
         </div>*@
     </div>
     <!-- Banner Ends Here -->
-
     @RenderBody()
 
 
@@ -180,13 +179,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <ul class="social-icons">
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">Linkedin</a></li>
-                        <li><a href="#">Github</a></li>
-                    </ul>
+                    @await Component.InvokeAsync("SocialMediaUrl")
                 </div>
                 <div class="col-lg-12">
                     <div class="copyright-text">
