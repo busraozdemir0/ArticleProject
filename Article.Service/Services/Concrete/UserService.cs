@@ -147,6 +147,8 @@ namespace Article.Service.Services.Concrete
             var userId = _user.GetLoggedInUserId();
             var user = await GetAppUserByIdAsync(userId);
 
+            Guid imageId = user.ImageId; // Giris yapan kullanicinin image id'si
+
             var isVerified = await userManager.CheckPasswordAsync(user, userProfileDto.CurrentPassword); // mevcuttaki sifre dogruysa true donecek
             if (isVerified && userProfileDto.NewPassword != null) // eger yeni sifre alanina deger girilmisse yani bos degilse sifre degistirme islemi yap
             {
@@ -158,6 +160,8 @@ namespace Article.Service.Services.Concrete
                     await signInManager.PasswordSignInAsync(user, userProfileDto.NewPassword, true, false); // cikis yaptirildiktan sonra yeni sifreyle tekrar giris yaptirildi
 
                     mapper.Map(userProfileDto,user); // mapleme islemi
+
+                    user.ImageId = imageId;
 
                     if (userProfileDto.Photo != null) // resim sectiyse resim yukleme islemi
                         user.ImageId = await UploadImageForUser(userProfileDto);
@@ -174,12 +178,17 @@ namespace Article.Service.Services.Concrete
             }
             else if (isVerified)
             {
+                
+
                 await userManager.UpdateSecurityStampAsync(user);
 
                 mapper.Map(userProfileDto,user); // mapleme islemi
 
-                if (userProfileDto.Photo != null) // resim sectiyse resim yukleme islemi
+                user.ImageId = imageId; // Giris yapan kullanicinin image id bilgisi ataniyor
+
+                if (userProfileDto.Photo != null) // eger kullanici resim sectiyse resim yukleme isleminin ardindan ImageId bilgisi guncelleniyor
                     user.ImageId = await UploadImageForUser(userProfileDto);
+
 
                 await userManager.UpdateAsync(user);
                 await unitOfWork.SaveAsync();
