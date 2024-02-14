@@ -12,7 +12,7 @@
                                 <input type="hidden" id="keyword" value="@Model.CurrentPage"/>
                                 <div class="blog-post">
                                     <div class="blog-thumb">
-                                        <img src="~/stand-blog/assets/images/blog-post-01.jpg" alt="">
+                                        @* <img src="~/images/@Model.Image.FileName" alt=""> *@
                                     </div>
                                     <div class="down-content">
                                         <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.Id"><h4>@item.Title</h4></a>

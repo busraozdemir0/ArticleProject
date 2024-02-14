@@ -46,14 +46,17 @@ namespace Article.Service.Services.Concrete
                 ? articles.OrderBy(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList()
                 : articles.OrderByDescending(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
 
+
+
             return new ArticleListDto
             {
                 Articles = sortedArticles,
                 CategoryId = categoryId == null ? null : categoryId.Value,
-                CurrentPage=currentPage,
-                PageSize=pageSize,
-                TotalCount=articles.Count,
-                IsAscending=isAscending
+                CurrentPage = currentPage,
+                PageSize = pageSize,
+                TotalCount = articles.Count,
+                IsAscending = isAscending,
+                Image=sortedArticles.First().Image,  // Her bir makalenin gorseli !!!   
             };
 
         }

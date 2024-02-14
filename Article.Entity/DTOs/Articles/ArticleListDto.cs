@@ -19,5 +19,6 @@ namespace Article.Entity.DTOs.Articles
         public virtual bool ShowPrevious => CurrentPage > 1; // bulunan sayfa 1'den buyukse onceki butonu ve sayfalari goster
         public virtual bool ShowNext => CurrentPage < TotalPages;
         public virtual bool IsAscending { get; set; } = false;
+        public Image Image { get; set; }
     }
 }

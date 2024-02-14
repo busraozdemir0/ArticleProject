@@ -26,6 +26,8 @@ namespace Article.Web.Controllers
         public async Task<IActionResult> Index(Guid? categoryId, int currentPage=1, int pageSize=3, bool isAscending=false)
         {
             var articles = await articleService.GetAllByPagingAsync(categoryId,currentPage,pageSize,isAscending);
+            
+            
             return View(articles);  
         }
         [HttpGet]
