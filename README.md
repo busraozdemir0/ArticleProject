@@ -4,7 +4,7 @@
 ![Ana ekran](https://github.com/busraozdemir0/ArticleProject/blob/master/Article.Web/wwwroot/ProjectScreenshots/home1.png)
 
 ### Footer
-![Ana ekran](https://github.com/busraozdemir0/ArticleProject/blob/master/Article.Web/wwwroot/ProjectScreenshots/footer.png)
+![Ana ekran](https://github.com/busraozdemir0/ArticleProject/blob/master/Article.Web/wwwroot/ProjectScreenshots/pagination.png)
 
 ### Makale Detay
 ![Ana ekran](https://github.com/busraozdemir0/ArticleProject/blob/master/Article.Web/wwwroot/ProjectScreenshots/detail1.png)
@@ -17,11 +17,15 @@
 
 ![Ana ekran](https://github.com/busraozdemir0/ArticleProject/blob/master/Article.Web/wwwroot/ProjectScreenshots/admin_menu.png)
 
-![Ana ekran](https://github.com/busraozdemir0/ArticleProject/blob/master/Article.Web/wwwroot/ProjectScreenshots/makaleler.png)
-
 ![Ana ekran](https://github.com/busraozdemir0/ArticleProject/blob/master/Article.Web/wwwroot/ProjectScreenshots/kategoriler.png)
 
 ![Ana ekran](https://github.com/busraozdemir0/ArticleProject/blob/master/Article.Web/wwwroot/ProjectScreenshots/kullanicilar.png)
+
+![Ana ekran](https://github.com/busraozdemir0/ArticleProject/blob/master/Article.Web/wwwroot/ProjectScreenshots/makaleler.png)
+
+##### Makale güncelleme
+
+![Ana ekran](https://github.com/busraozdemir0/ArticleProject/blob/master/Article.Web/wwwroot/ProjectScreenshots/makaleUpdate.png)
 
 #### Kullanıcının kendi bilgilerini güncelleyebilme
 
