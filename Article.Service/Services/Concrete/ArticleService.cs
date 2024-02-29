@@ -34,7 +34,7 @@ namespace Article.Service.Services.Concrete
         }
 
         // Manuel olarak paging islemi
-        public async Task<ArticleListDto> GetAllByPagingAsync(Guid? categoryId, int currentPage=1, int pageSize=3, bool isAscending = false)
+        public async Task<ArticleListDto> GetAllByPagingAsync(Guid? categoryId, int currentPage = 1, int pageSize = 3, bool isAscending = false)
         {
             pageSize = pageSize > 20 ? 20 : pageSize; // sayfa sayisi 20'den buyuk mu
 
@@ -55,8 +55,7 @@ namespace Article.Service.Services.Concrete
                 CurrentPage = currentPage,
                 PageSize = pageSize,
                 TotalCount = articles.Count,
-                IsAscending = isAscending,
-                Image=sortedArticles.First().Image,  // Her bir makalenin gorseli !!!   
+                IsAscending = isAscending,  
             };
 
         }
@@ -68,20 +67,34 @@ namespace Article.Service.Services.Concrete
             var userId = _user.GetLoggedInUserId();  // login olan kullanicinin id'si
             var userEmail = _user.GetLoggedInUserEmail();
 
-            var imageUpload = await imageHelper.Upload(articleAddDto.Title,articleAddDto.Photo,ImageType.Post);
-            Image image = new(imageUpload.FullName,articleAddDto.Photo.ContentType,userEmail);
-            await unitOfWork.GetRepository<Image>().AddAsync(image);
+            if (articleAddDto.Photo != null) // Eger resim secmisse
+            {
+                var imageUpload = await imageHelper.Upload(articleAddDto.Title, articleAddDto.Photo, ImageType.Post);
+                Image image = new(imageUpload.FullName, articleAddDto.Photo.ContentType, userEmail);
+                await unitOfWork.GetRepository<Image>().AddAsync(image);
 
-            var article = new Articlee(articleAddDto.Title, articleAddDto.Content, userId,userEmail,articleAddDto.CategoryId, image.Id);
+                var article = new Articlee(articleAddDto.Title, articleAddDto.Content, userId, userEmail, articleAddDto.CategoryId, image.Id);
 
-            await unitOfWork.GetRepository<Articlee>().AddAsync(article);
-            await unitOfWork.SaveAsync();
+                await unitOfWork.GetRepository<Articlee>().AddAsync(article);
+                await unitOfWork.SaveAsync();
+            }
+            else // resim secmemisse
+            {
+                var article = new Articlee() // Resim haricindeki alanlari makale nesnesine aktar
+                {
+                    Title = articleAddDto.Title,
+                    Content = articleAddDto.Content,
+                };
+                await unitOfWork.GetRepository<Articlee>().AddAsync(article); // ve bu makale nesnesini kaydet
+                await unitOfWork.SaveAsync();
+
+            }
         }
 
         public async Task<List<ArticleDto>> GetAllArticlesWithCategoryNonDeletedAsync()  // Tum makaleleleri kategorleriyle birlikte silinmemis olanlari getir
         {
             // Kategorileri makalelere include ettik
-            var articles=await unitOfWork.GetRepository<Articlee>().GetAllAsync(x=>!x.IsDeleted, x=>x.Category); // (x.IsDeleted==False) IsDeleted'leri false olanlari getir 
+            var articles = await unitOfWork.GetRepository<Articlee>().GetAllAsync(x => !x.IsDeleted, x => x.Category); // (x.IsDeleted==False) IsDeleted'leri false olanlari getir 
 
             var map = mapper.Map<List<ArticleDto>>(articles);
 
@@ -89,10 +102,10 @@ namespace Article.Service.Services.Concrete
 
         }
 
-        public async Task<ArticleDto> GetArticleWithCategoryNonDeletedAsync(Guid articleId) 
+        public async Task<ArticleDto> GetArticleWithCategoryNonDeletedAsync(Guid articleId)
         {
             // Kategorileri makalelere include ettik
-            var article = await unitOfWork.GetRepository<Articlee>().GetAsync(x => !x.IsDeleted && x.Id==articleId, x => x.Category,i=>i.Image, u=>u.User); // (x.IsDeleted==False) IsDeleted'leri false olanlari getir 
+            var article = await unitOfWork.GetRepository<Articlee>().GetAsync(x => !x.IsDeleted && x.Id == articleId, x => x.Category, i => i.Image, u => u.User); // (x.IsDeleted==False) IsDeleted'leri false olanlari getir 
 
             var map = mapper.Map<ArticleDto>(article);
 
@@ -110,15 +123,15 @@ namespace Article.Service.Services.Concrete
                 imageHelper.Delete(article.Image.FileName); // once makalede var olan resmi silecek
 
                 var imageUpload = await imageHelper.Upload(articleUpdateDto.Title, articleUpdateDto.Photo, ImageType.Post); // daha sonrasinda yeni resim yukleme islemleri yapilacak
-                Image image = new(imageUpload.FullName,articleUpdateDto.Photo.ContentType,userEmail);
+                Image image = new(imageUpload.FullName, articleUpdateDto.Photo.ContentType, userEmail);
                 await unitOfWork.GetRepository<Image>().AddAsync(image);
 
                 article.ImageId = image.Id; // makalenin resimId'sini yeni yukledigimiz resim Id'si ile degistiriyoruz
             }
 
-            article.Title= articleUpdateDto.Title;
-            article.Content= articleUpdateDto.Content;
-            article.CategoryId= articleUpdateDto.CategoryId;
+            article.Title = articleUpdateDto.Title;
+            article.Content = articleUpdateDto.Content;
+            article.CategoryId = articleUpdateDto.CategoryId;
             article.ModifiedDate = DateTime.Now;
             article.ModifiedBy = userEmail;
 
@@ -135,7 +148,7 @@ namespace Article.Service.Services.Concrete
 
             article.IsDeleted = true; // makaleyi silmek yerine IsDeleted (silindi mi) alanini true olarak guncelliyoruz. (silinmediyse false degerine sahip)
             article.DeletedDate = DateTime.Now;
-            article.DeletedBy = userEmail; 
+            article.DeletedBy = userEmail;
 
             await unitOfWork.GetRepository<Articlee>().UpdateAsync(article);
             await unitOfWork.SaveAsync();
@@ -157,7 +170,7 @@ namespace Article.Service.Services.Concrete
             var article = await unitOfWork.GetRepository<Articlee>().GetByGuidAsync(articleId);
             var userEmail = _user.GetLoggedInUserEmail();
 
-            article.IsDeleted = false; 
+            article.IsDeleted = false;
             article.DeletedDate = null;
             article.DeletedBy = null;
 
@@ -174,7 +187,7 @@ namespace Article.Service.Services.Concrete
             var articles = await unitOfWork.GetRepository<Articlee>().GetAllAsync(
                     a => !a.IsDeleted && (a.Title.Contains(keyword) || a.Content.Contains(keyword) || a.Category.Name.Contains(keyword)), // makale silinmemisse ve aranan ifade makalenin basliginda veya iceriginde veya kategorisinde geciyorsa bunu dondur.
                     a => a.Category, i => i.Image, u => u.User); // Category, Image ve User include edilmis bir sekilde silinmemis olan makaleler(makaleyi yazanin adi ve soyadina erisebilmek icin User'i da include ettik)
-            
+
             var sortedArticles = isAscending // isAscending True ise artan bir sekilde(tarihe gore) siralama yapilacak. False ise azalan bir sekilde(tarihe gore) siralama yapilacak
                 ? articles.OrderBy(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList()
                 : articles.OrderByDescending(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
